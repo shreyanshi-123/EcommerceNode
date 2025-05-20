@@ -26,7 +26,7 @@ app.use(cors(corsOptions));
 const user = require('./routes/userRoute');
 const product = require('./routes/productRoute');
 const order = require('./routes/orderRoute');
-const payment = require('./routes/paymentRoute');
+// const payment = require('./routes/paymentRoute');
 const category = require('./routes/categoryRoute');
 const coupon = require('./routes/couponRoute');
 const faq = require('./routes/faqRoute');
