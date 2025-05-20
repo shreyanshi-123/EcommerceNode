@@ -7,12 +7,12 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { NavLink } from "react-router-dom";
 import './instaslider.css'
 
-const Post1 = `${process.env.REACT_APP_API_URL}/assets/images/instagram/post1.jpg`
-const Post2 = `${process.env.REACT_APP_API_URL}/assets/images/instagram/post2.jpg`
-const Post3 = `${process.env.REACT_APP_API_URL}/assets/images/instagram/post3.jpg`
-const Post4 = `${process.env.REACT_APP_API_URL}/assets/images/instagram/post4.jpg`
-const Post5 = `${process.env.REACT_APP_API_URL}/assets/images/instagram/post5.jpg`
-const Post6 = `${process.env.REACT_APP_API_URL}/assets/images/instagram/post6.jpg`
+const Post1 = `${process.env.REACT_APP_API_URL}/assets/images/Instagram/post1.jpg`
+const Post2 = `${process.env.REACT_APP_API_URL}/assets/images/Instagram/post2.jpg`
+const Post3 = `${process.env.REACT_APP_API_URL}/assets/images/Instagram/post3.jpg`
+const Post4 = `${process.env.REACT_APP_API_URL}/assets/images/Instagram/post4.jpg`
+const Post5 = `${process.env.REACT_APP_API_URL}/assets/images/Instagram/post5.jpg`
+const Post6 = `${process.env.REACT_APP_API_URL}/assets/images/Instagram/post6.jpg`
 
 
 
@@ -52,32 +52,7 @@ const InstagramSlider = () => {
 
 
     ]
-    //   const [posts, setPosts] = useState([]);
-    //   const [loading, setLoading] = useState(true);
-
-    //   const accessToken = 'YOUR_INSTAGRAM_ACCESS_TOKEN';
-    //   const userId = 'YOUR_USER_ID'; 
-
-    //   useEffect(() => {
-    //     const fetchInstagramPosts = async () => {
-    //       try {
-    //         const response = await axios.get(
-    //           `https://graph.instagram.com/${userId}/media?fields=id,permalink&access_token=${accessToken}`
-    //         );
-    //         setPosts(response.data.data);
-    //         setLoading(false);
-    //       } catch (error) {
-    //         console.error('Error fetching Instagram posts:', error);
-    //         setLoading(false);
-    //       }
-    //     };
-
-    //     fetchInstagramPosts();
-    //   }, []);
-
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
+   
 
     const settings = {
         dots: false,
@@ -125,12 +100,8 @@ const InstagramSlider = () => {
                         <div key={posts.id} className="slider-item">
                             {/* <InstagramEmbed url={posts.permalink} width="100%" /> */}
                             {/* <NavLink to="/" className="block w-auto"> */}
-                                <LazyLoadImage
-                                    src={posts.image}
-                                    alt="Clotya"
-                                    width=""
-                                    className=""
-                                />
+                            <img src={posts.image} alt="Clotya" />
+                                
                             {/* </NavLink> */}
                         </div>
                     ))}
