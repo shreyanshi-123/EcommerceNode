@@ -1,55 +1,44 @@
-import { useEffect } from 'react';
-import Categories from '../Layouts/Categories';
-import Banner from './Banner/Banner';
-import ProductSlider from './ProductSlider/ProductSlider';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, getSliderProducts } from '../../actions/productAction';
-import { useSnackbar } from 'notistack';
-import MetaData from '../Layouts/MetaData';
-import ProductServices from './ProductServices/ProductServices';
-import Testimonials from './Testimonials/Testimonials';
-import CategoriesBanner from './CategoriesBanner/CategoriesBanner';
-import Faq from './Faqs/Faq';
-import Blog from './Blogs/Blog';
+import React from 'react';
+import MetaData from "../Layout/MetaData"
+// import AboutUs from "./AboutUs/AboutUs"
+// import Amenities from "./Amenities/Amenities"
+import BannerSlider from "./BannerSlider/BannerSlider"
+import FreeShipping from "./FreeShipping/freeShipping"
+import NewCollection1 from "./NewCollection/NewCollection1"
+import NewCollection2 from "./NewCollection/NewCollection2"
+import Category from "./Categories/Category"
+import Signature from "./Signature"
+import Review from "./ReviewSection/Review"
+
+import SliderFunc from "./ProductSlider/slider"
+import ShopNow from "./ShopNowSection/shopnow"
+import InstagramSlider from "./InstagramSlider/instagram"
+import Categoryy from "./category"
+
 
 const Home = () => {
+    return (
+        <>
+            <MetaData
+                title={"Clotya – Fashion Store eCommerce Theme"}
+                // description={"Discover premium residential apartments for sale in Zirakpur at The Clotya Aspire. Explore 3 & 4 BHK luxury flats for sale, including options near Chandigarh Airport, all with world-class amenities!"} 
+                // keywords={"The Clotya Aspire, 3 BHK Flats in Zirakpur,4 BHK Flats in Zirakpur, Luxury Apartments in Zirakpur,Zirakpur Real Estate, Flats for Sale in Zirakpur, Clotya Aspire Zirakpur, Modern Apartments Zirakpur"}
+                canonicalUrl={process.env.REACT_APP_API_URL}
+            />
 
-  const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
+            <BannerSlider />
+            <FreeShipping />
+            {/* <NewCollection1 /> */}
+            {/* <NewCollection2 /> */}
+            <Category />
+            <Signature />
+            <Review />
+            <SliderFunc />
+            < ShopNow/>
+            <InstagramSlider/>
+            {/* <Categoryy/> */}
+        </>
+    )
+}
 
-  const { error, loading } = useSelector((state) => state.products);
-
-  useEffect(() => {
-    if (error) {
-      enqueueSnackbar(error, { variant: "error" });
-      dispatch(clearErrors());
-    }
-    dispatch(getSliderProducts());
-  }, [dispatch, error, enqueueSnackbar]);
-
-  return (
-    <>
-      <MetaData title="Online Shopping Site for Organic Products. Best Offers!" />
-      
-      <main className="flex flex-col gap-3">
-        <Banner />
-        <Categories />
-
-        <CategoriesBanner />
-        
-        {!loading && <ProductSlider title={"Trending Products"} tagline={"Latest Products"} />}
-
-        <ProductServices />
-
-        <Testimonials />
-
-        <Faq />
-
-        <Blog />
-
-      </main>
-    </>
-  );
-};
-
-export default Home;
+export default Home

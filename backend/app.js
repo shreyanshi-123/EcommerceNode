@@ -37,7 +37,7 @@ const shipping = require('./routes/shippingRoute');
 app.use('/api/v1', user);
 app.use('/api/v1', product);
 app.use('/api/v1', order);
-app.use('/api/v1', payment);
+// app.use('/api/v1', payment);
 app.use('/api/v1', category);
 app.use('/api/v1', coupon);
 app.use('/api/v1', faq);

@@ -1,0 +1,194 @@
+.btn-shopnow:hover {
+    color: #ee403d !important;
+}
+
+.black-btn-shop {
+    width: auto;
+    text-align: center !important;
+    padding: 5px 20px !important;
+    font-size: 16px !important;
+    line-height: 28px !important;
+}
+
+.product-info-shop {
+    /* transform: translateY(-25px); */
+    padding: 0px 20px;
+}
+
+.second-image {
+    visibility: hidden;
+}
+
+.image-part:hover .second-image {
+    visibility: visible;
+}
+
+.image-part:hover .first-image {
+    visibility: hidden;
+}
+
+.black-btn-shop {
+    border: 1px solid #000;
+}
+
+.black-btn-shop:hover {
+    background-color: #fff !important;
+    color: #000 !important;
+    border: 1px solid #000;
+}
+
+.productname:hover {
+    color: #ee403d;
+}
+
+.black-btn-shop:hover img {
+    filter: none;
+}
+
+.one::before {
+    content: '1';
+    position: absolute;
+    color: #fff;
+    top: 55%;
+    background: #ee403d;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    left: -8%;
+}
+
+.one.active::before {
+    z-index: 99999;
+}
+
+.product-card-one.active {
+    z-index: 9999;
+}
+
+.two::before {
+    content: '2';
+    position: absolute;
+    color: #fff;
+    top: 45%;
+    background: #ee403d;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    right: 63%;
+}
+
+.two.active::before {
+    z-index: 99999;
+}
+
+.product-card-two.active {
+    z-index: 9999;
+}
+
+.three::before {
+    content: '3';
+    position: absolute;
+    color: #fff;
+    bottom: 2%;
+    background: #ee403d;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    left: 45%;
+}
+
+.three.active::before {
+    z-index: 999;
+}
+
+.product-card-three.active {
+    z-index: 99;
+}
+
+.one a,
+.two a,
+.three a {
+    display: none;
+}
+
+.one:hover a,
+.two:hover a,
+.three:hover a {
+    display: block;
+}
+
+@media (max-width: 500px) {
+    .black-btn-shop {
+        width: auto;
+        text-align: center !important;
+        padding: 5px 18px !important;
+        font-size: 13px !important;
+        line-height: 15px !important;
+    }
+}
+
+@media (max-width:640px) {
+
+
+    .wrapper-shop-sec {
+        text-align: center;
+    }
+
+    .bg-div {
+        background-position: 60% !important;
+        background-size: cover;
+    }
+
+    .one::before {
+        top: 50%;
+        left: 31%;
+    }
+
+    .two::before {
+        top: 36%;
+        right: 34%;
+    }
+
+    .three::before {
+        left: 71%;
+    }
+
+    .product-card-one {
+        left: 0;
+    }
+
+    .product-card-two {
+        right: 0;
+    }
+
+    .product-card-three {
+        left: 0;
+    }
+
+}
+
+@media (max-width: 500px) {
+    .black-btn-shop {
+        width: auto;
+        text-align: center !important;
+        padding: 5px 18px !important;
+        font-size: 13px !important;
+        line-height: 15px !important;
+    }
+
+    .product-info-shop {
+        padding: 0px 10px;
+    }
+}

@@ -1,0 +1,277 @@
+@media (min-width:1024px) {
+
+    /* h1.banner-title {
+        font-size: 35px;
+        line-height: 1.2;
+    }
+
+    h2.banner-sub-title {
+        font-size: 25px;
+    } */
+
+    /* .banner-slider {
+        height: 650px;
+        overflow: hidden;
+        position: relative;
+    } */
+}
+
+.possession-txt {
+    align-items: center;
+}
+
+h1.banner-title.w-fit {
+    width: fit-content;
+}
+
+.possession-txt.w-fit {
+    width: fit-content;
+}
+
+.banner-slider .bg-img {
+    transition-timing-function: linear;
+    transition-duration: 20s;
+    transform: scale(1);
+}
+
+.slick-active .banner-slider .bg-img {
+    transform: scale(1.2);
+}
+
+.banner-slider-section .banner-slider::before {
+    content: "";
+    top: 0;
+    background-color: #000;
+    opacity: 0.5;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* .banner-text {
+    margin-left: 140px;
+    padding-top: 0px;
+}
+@media screen and (max-width: 991px) {
+    
+    .banner-text {
+        margin-left: 10px;
+    }
+} */
+.slide {
+    width: 100% !important;
+}
+
+.banner-wrap .slick-dots {
+    bottom: 25px;
+}
+
+.banner-wrap .slick-dots li button::before {
+    color: #fff;
+    font-size: 14px;
+}
+@media (min-width:1024px){
+    .banner-wrap  .slick-dots .slick-active button::before {
+        opacity: 1;
+        color: #fff !important;
+    }
+}
+
+
+/*  */
+
+.possession {
+    position: absolute;
+    top: -12px;
+    left: -18px;
+    z-index: 999;
+    width: 620px;
+    padding: 5px;
+    background-color: #e43031;
+    color: #fff;
+    text-align: center;
+    transform: rotate(-35deg) translate(-28%, -28%);
+    /* box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4); */
+    font-size: 25px;
+    /* text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4); */
+    z-index: 1;
+    line-height: 1;
+}
+
+
+header {
+    z-index: 9999;
+}
+
+header.scrolled.sticky.home-header {
+    z-index: 99999999;
+}
+
+@media (min-width:1600px) {
+    .possession {
+        padding: 10px;
+    }
+}
+
+@media (max-width:1120px) {
+    .possession {
+        top: -21px;
+        left: -38px;
+        font-size: 18px;
+        /* padding: 2px; */
+    }
+}
+
+@media (max-width: 639px) {
+    .possession {
+        top: -29px;
+        left: -54px;
+    }
+}
+
+@media (max-width: 450px) {
+    .possession {
+        top: -42px;
+        left: -66px;
+    }
+}
+
+@media (max-width: 400px) {
+    .possession {
+        top: -48px;
+        left: -77px;
+        font-size: 12px;
+    }
+}
+
+
+
+@media (max-width:360px) {
+    .possession {
+        top: -18px;
+        left: -34px;
+        font-size: 10px;
+        /* padding: 3px; */
+        width: 430px;
+    }
+}
+
+@media (max-width:340px) {
+    .possession {
+        top: -25px;
+        left: -38px;
+        font-size: 10px;
+        padding: 3px;
+        width: 430px;
+    }
+}
+
+/* @media (max-width:340px){
+    .possession {
+        top: -25px;
+        left: -38px;
+    }} */
+
+.h-screen {
+    height: 90vh;
+    min-height: 630px;
+}
+
+.banner-wrap .slick-dots {
+    bottom: 15px;
+}
+
+.BannerScrolled .possession {
+    display: none;
+}
+
+.slick-dots li button,
+.slick-dots li button:before {
+    font-size: 10px;
+}
+
+.slick-dots li {
+    margin: 0px;
+}
+
+/* Default state */
+.left-animate img {
+    transition: all ease 0.3s;
+}
+
+/* Define the keyframe animation for moving the image back and forth */
+@keyframes moveRight {
+    0% {
+        transform: translateX(0);
+        /* Start at the original position */
+    }
+
+    25% {
+        transform: translateX(5px);
+        /* Move 5px to the right */
+    }
+
+    50% {
+        transform: translateX(0px);
+        /* Return to the original position */
+    }
+
+    75% {
+        transform: translateX(-5px);
+        /* Move 5px to the left */
+    }
+
+    100% {
+        transform: translateX(0px);
+        /* Return to the original position */
+    }
+}
+
+/* Trigger the animation to loop when hovering */
+.banner-section .left-animate:hover img {
+    animation: moveRight 1s infinite linear;
+    /* Apply the keyframe animation */
+}
+
+/* banner slider arrow */
+
+.banner-section .slick-arrow.slick-next {
+    right: 0;
+}
+
+.banner-section .slick-arrow.slick-prev {
+    left: 0;
+    z-index: 9;
+}
+.banner-section .slick-prev:before, .slick-next:before {
+    font-size: 34px;
+    opacity: 1;
+    background: #fff;
+    /* color: #000; */
+    font-weight: 400;
+    /* background: #fff; */
+}
+
+@media (max-width:1023px){
+    .banner-wrap {
+        min-height: 469px;
+    }
+    .navigation {
+        position: relative;
+    }
+    ul.slick-dots {
+        position: unset;
+        margin-top: 12px;
+    }
+    .slick-dots  button::before {
+        color: #000!important;
+        opacity: 0.3!important;
+    }
+    .slick-dots .slick-active button::before{
+        opacity: 1 !important;
+       
+    }
+}
+

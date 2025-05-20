@@ -1,0 +1,35 @@
+.form-input:focus {
+    box-shadow: 0 0 0 1px #8F6445, 0px 1px 2px rgba(0, 0, 0, 0.15);
+    border-color: #8F6445;
+}
+
+/* .PhoneInputCountry {
+    display: none !important;
+} */
+.side-popup-form form.enquire-form .form-section #enquiry-form {
+    justify-content: flex-start;
+}
+
+input.align-middle.size-4 {
+    scale: 1.5;
+    margin-right: 12px;
+}
+
+.form-success #enquiry-form {
+    gap: 0!important;
+}
+
+.check {
+    border-radius: 50%;
+    font-size: 15px;
+    height: 24px;
+    padding: 4px;
+    width: 24px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+span.thanku-txt {
+    font-size: 25px;
+}
