@@ -23,7 +23,7 @@ function App() {
             <Route path='*' element={<PageNotFound />} />
 
             
-          {/* <Route path='/dashboard' element={<Dashboard />} /> */}
+          <Route path='/dashboard' element={<Dashboard />} />
            
 
           </Route>
