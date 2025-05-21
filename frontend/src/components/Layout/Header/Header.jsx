@@ -331,8 +331,8 @@ const [categories, setCategories] = useState([]);
            if (!response.ok) throw new Error('Network response was not ok');
            const data = await response.json();
            setCategories(data);
-         } catch (err) {
-           setError(err.message);
+         } catch {
+           setError(true);
          } finally {
            setLoading(false);
          }
@@ -341,12 +341,12 @@ const [categories, setCategories] = useState([]);
        fetchData();
      }, []);
    
-     if (loading) return <div>Loading...</div>;
-     if (error) return <div>Error: {error}</div>;
+  //    if (loading) return <div>Loading...</div>;
+  //    if (error) return <div>Error: {error}</div>;
 
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error}</div>;
 
 
 
