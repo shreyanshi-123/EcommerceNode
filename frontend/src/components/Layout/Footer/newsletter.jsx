@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Footer.css'
 const FooterTopSection = () => {
   return (
     <div className="w-full bg-black py-20 ">
@@ -23,7 +23,7 @@ const FooterTopSection = () => {
               required
             />
             <button
-              className="bg-black text-white px-[20px] py-[8px] sm:px-[30px] sm:py-[8px]  hover:bg-gray-800 transition"
+              className="hover:bg-[#444] submit-btn bg-black text-white px-[20px] py-[8px] sm:px-[30px] sm:py-[8px]   transition "
               type="submit"
             >
               Subscribe

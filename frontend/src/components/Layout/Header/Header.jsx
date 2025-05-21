@@ -789,19 +789,19 @@ const Header = () => {
                               <div className="product-group-button">
 
 
-                                <div class="button-in quickshop">
-                                  <a class="quickshop" href="#"><FontAwesomeIcon icon={faSearch} /></a>
+                                <div class="button-in quickshop hover:text-white">
+                                  <a class="quickshop hover:text-white" href="#"><FontAwesomeIcon icon={faSearch} /></a>
                                   <span class="ts-tooltip button-tooltip">Compare</span>
                                 </div>
 
-                                <div class="button-in compare">
-                                  <a class="compare" href="/" ><FontAwesomeIcon icon={faBarChart} /></a>
+                                <div class="button-in compare hover:text-white">
+                                  <a class="compare hover:text-white" href="/" ><FontAwesomeIcon icon={faBarChart} /></a>
                                   <span class="ts-tooltip button-tooltip">Quick view</span>
                                 </div>
 
-                                <div class="button-in wishlist">
+                                <div class="button-in wishlist hover:text-white">
 
-                                  <a href="/" class=""><FontAwesomeIcon icon={faHeart} />
+                                  <a href="/" class="hover:text-white"><FontAwesomeIcon icon={faHeart} />
                                   </a>
                                   <span class="ts-tooltip button-tooltip">Wishlist</span>
                                 </div>

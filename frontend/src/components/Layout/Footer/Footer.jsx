@@ -73,7 +73,7 @@ const Footer = () => {
                     <ul className="flex flex-wrap text-[13px] text-black divide-x divide-gray-300 copyrite">
                         {bottomLinks.map((link, i) => (
                             <li key={i} className=" first:pl-0 last:pr-0 px-3 lnks-footer">
-                                <a href="#" className="leading-[1.5]">{link}</a>
+                                <a href="#" className="leading-[1.5] hover:text-primary-red">{link}</a>
                             </li>
                         ))}
                     </ul>

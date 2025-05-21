@@ -43,7 +43,7 @@ const ShopNow = () => {
                                     onMouseEnter={() => setActiveProduct('one')}
                                     onMouseLeave={() => setActiveProduct(null)}
                                 >
-                                    <a href="javascript:void(0)" className={`product-card-one max-w-[410px] w-full max-h-[260px] h-full absolute left-[-6%] top-[32%] hover:no-underline no-underline hover:text-black ${activeProduct === 'one' ? 'active' : ''}`}>
+                                    <a href="javascript:void(0)" className={`product-card-one max-w-[410px] w-full   absolute left-[-6%] top-[32%] hover:no-underline no-underline hover:text-black ${activeProduct === 'one' ? 'active' : ''}`}>
 
                                         <div className="product-wrapper flex items-center bg-white">
                                             <div className="image-part w-[48%] relative">
@@ -76,7 +76,7 @@ const ShopNow = () => {
                                     onMouseLeave={() => setActiveProduct(null)}
                                 >
                                     <div className="" >
-                                        <a href="javascript:void(0)" className={`product-card-two max-w-[410px] w-full max-h-[260px] h-full absolute top-[22%] right-[11%] hover:no-underline no-underline hover:text-black ${activeProduct === 'two' ? 'active' : ''}`}>
+                                        <a href="javascript:void(0)" className={`product-card-two max-w-[410px] w-full  absolute top-[22%] right-[11%] hover:no-underline no-underline hover:text-black ${activeProduct === 'two' ? 'active' : ''}`}>
 
 
 
@@ -112,7 +112,7 @@ const ShopNow = () => {
                                     onMouseLeave={() => setActiveProduct(null)}
                                 >
                                     <div className="" >
-                                        <a href="javascript:void(0)" className={`product-card-three max-w-[410px] w-full max-h-[260px] h-full absolute left-[-7%] bottom-[5%] hover:no-underline no-underline hover:text-black ${activeProduct === 'three' ? 'active' : ''}`}>
+                                        <a href="javascript:void(0)" className={`product-card-three max-w-[410px] w-full  absolute left-[-7%] bottom-[5%] hover:no-underline no-underline hover:text-black ${activeProduct === 'three' ? 'active' : ''}`}>
 
                                             <div className="product-wrapper flex items-center bg-white">
                                                 <div className="image-part w-[48%] relative">

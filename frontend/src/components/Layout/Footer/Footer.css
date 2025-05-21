@@ -24,3 +24,7 @@
 .lnks-footer:last-child {
     padding-right: 0px!important;
 }
+
+.submit-btn:hover {
+background-color: #444!important;
+}

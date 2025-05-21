@@ -757,3 +757,6 @@ button.accordion-button {
         display: none!important;
     }
 }
+.button-in:hover a {
+    color: #fff!important;
+}
