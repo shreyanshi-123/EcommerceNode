@@ -307,8 +307,8 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
-// category fetch from database
-const [categories, setCategories] = useState([]);
+  // category fetch from database
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -324,24 +324,25 @@ const [categories, setCategories] = useState([]);
     jewellery: 'jewelry-cat.jpg',
   };
 
-    useEffect(() => {
-       const fetchData = async () => {
-         try {
-           const response = await fetch(`${baseUrl}/api/get-category`);
-           if (!response.ok) throw new Error('Network response was not ok');
-           const data = await response.json();
-           console.log (data);
-           setCategories(data);
-         } catch {
-           setError(true);
-         } finally {
-           setLoading(false);
-         }
-       };
-   
-       fetchData();
-     }, []);
-   
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/api/get-category`);
+         console.log(response)
+        // if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        // console.log(await response.json())
+        setCategories(data);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   //    if (loading) return <div>Loading...</div>;
   //    if (error) return <div>Error: {error}</div>;
 
@@ -352,7 +353,7 @@ const [categories, setCategories] = useState([]);
 
 
 
-  
+
   return (
     <header className="relative z-50">
       {/* Promo Bar */}
@@ -469,7 +470,7 @@ const [categories, setCategories] = useState([]);
                           </Accordion.Header>
                           <Accordion.Body>
 
-                            {category.map(({ id, item }) => (
+                            {categories.map(({ id, item }) => (
                               <a href="#" className='text-black hover:text-primary-red'>    <li key={id} className='text-black text-[15px] py-[4px] leading-[1.5]'>{item}</li></a>
                             ))}
 
@@ -615,29 +616,33 @@ const [categories, setCategories] = useState([]);
 
                         {/* ============================================================= */}
                         {/* <h4 className="font-semibold text-sm mb-2">Title</h4> */}
-                         <ul  className="py-[50px] text-sm font-medium flex gap-[20px] xl:gap-[30px] justify-center items-center text-center">
-                           {categories.map((category, index) => {
-            const fileName = imageFileNames[category.category] || 'default.jpg';
-            const imageUrl = `${baseUrl}/assets/images/dropdowns/${fileName}`;
+                        <ul className="py-[50px] text-sm font-medium flex gap-[20px] xl:gap-[30px] justify-center items-center text-center">
+                          {categories.map((category, index) => {
+                            const fileName = imageFileNames[category.category] || 'default.jpg';
+                            const imageUrl = `${baseUrl}/assets/images/dropdowns/${fileName}`;
 
-            return (
-              <li key={index} className='flex flex-col'>
-                 <div className="rounded-[50%] h-[150px] 5xl:h-[166px] xl:h-[179.156px] w-[150px] 5xl:w-[166px] xl:w-[179.156px] bg-[#f3f3f3] overflow-hidden rounded-dropdown">
-                   <a href="">  <LazyLoadImage
-                                  src={imageUrl}
-                                  alt={category.category}
-                                  className="category w-full h-full object-contain"
-                                />
-                                  {/* <FontAwesomeIcon icon="fa-solid fa-plus" /> */}
+                            
 
-                                </a>
-                 </div>
-                  <a href="#" className="pt-[20px] text-[17px] leading-[1.4] hover:text-primary-red">{category.category}</a>
-                
-              </li>
-            );
-          })}
-                        {/* {category.map(({ id, item,image }) => (
+
+                              <li key={index} className='flex flex-col'>
+                                <div className="rounded-[50%] h-[150px] 5xl:h-[166px] xl:h-[179.156px] w-[150px] 5xl:w-[166px] xl:w-[179.156px] bg-[#f3f3f3] overflow-hidden rounded-dropdown">
+                                  <a href="">  <LazyLoadImage
+                                    src={imageUrl}
+                                    alt={category.category}
+                                    className="category w-full h-full object-contain"
+                                  />
+                                    {/* <FontAwesomeIcon icon="fa-solid fa-plus" /> */}
+
+                                  </a>
+                                </div>
+                                <a href="#" className="pt-[20px] text-[17px] leading-[1.4] hover:text-primary-red">{category.category}</a>
+
+                              </li>
+
+
+                           
+                          })}
+                          {/* {category.map(({ id, item,image }) => (
                          
                             <li key={id} className='flex flex-col' >
                               <div className="rounded-[50%] h-[150px] 5xl:h-[166px] xl:h-[179.156px] w-[150px] 5xl:w-[166px] xl:w-[179.156px] bg-[#f3f3f3] overflow-hidden rounded-dropdown">
@@ -648,13 +653,13 @@ const [categories, setCategories] = useState([]);
                                 />
                                   {/* <FontAwesomeIcon icon="fa-solid fa-plus" /> */}
 
-                                {/* </a>
+                          {/* </a>
                               </div>
                               <a href="#" className="pt-[20px] text-[17px] leading-[1.4] hover:text-primary-red">{item}</a>
                             </li> */}
-                         
-                          
-                        {/* ))} */} 
+
+
+                          {/* ))} */}
                         </ul>
                       </div>
                     </div >
