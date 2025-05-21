@@ -13,7 +13,7 @@ import Review from "./ReviewSection/Review"
 import SliderFunc from "./ProductSlider/slider"
 import ShopNow from "./ShopNowSection/shopnow"
 import InstagramSlider from "./InstagramSlider/instagram"
-import Categoryy from "./category"
+// import Categoryy from "./category"
 
 
 const Home = () => {
