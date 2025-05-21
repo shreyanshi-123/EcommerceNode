@@ -330,6 +330,7 @@ const [categories, setCategories] = useState([]);
            const response = await fetch(`${baseUrl}/api/get-category`);
            if (!response.ok) throw new Error('Network response was not ok');
            const data = await response.json();
+           console.log (data);
            setCategories(data);
          } catch {
            setError(true);
