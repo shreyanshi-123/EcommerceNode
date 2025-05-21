@@ -324,18 +324,15 @@ const Header = () => {
     Glasses: 'glasses-cat.jpg',
     jewellery: 'jewelry-cat.jpg',
   };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${baseUrl}/api/get-category`);
-         console.log(await response.json())
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/get-category`);
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        console.log(data)
         setCategories(data);
-      } catch {
-        setError(true);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -363,7 +360,7 @@ const Header = () => {
       <div className="navigation text-white absolute w-full">
         <div className="bg-black text-white text-[12px] text-center relative py-2.5">
           <div class="container  m-auto">
-            <p className='text-[12px] uppercase tracking-[0.25px]'>SUMMER SALE FOR ALL SWIM SUITS AND FREE EXPRESS INTERNATIONAL DELIVERY - OFF 50%! <a href="/shop" className='font-semibold'>SHOP NOW</a></p>
+            <p className='text-[12px] uppercase tracking-[0.25px]'>SUMMER SALE FOR ALL SWIM SUITS AND FREE EXPRESS INTERNATIONAL DELIVERY - OFF 50%! <a href="/shop" className='font-semibold hover:text-white text-white '>SHOP NOW</a></p>
           </div>
         </div >
         <div className="px-[0px] lg:px-[15px]">
@@ -471,9 +468,21 @@ const Header = () => {
                           </Accordion.Header>
                           <Accordion.Body>
 
-                            {category.map(({ id, item }) => (
-                              <a href="#" className='text-black hover:text-primary-red'>    <li key={id} className='text-black text-[15px] py-[4px] leading-[1.5]'>{item}</li></a>
-                            ))}
+                            {categories.map((category, index) => {
+                              const fileName = imageFileNames[category.category];
+                              const imageUrl = `${baseUrl}/assets/images/dropdowns/${fileName}`;
+
+                              return (
+
+                                <li key={index}>
+                                  <a href="#" className='text-black hover:text-primary-red'>    <li className='text-black text-[15px] py-[4px] leading-[1.5]'>{category.category}</li></a>
+
+
+
+                                </li>
+                              );
+                            })}
+
 
                           </Accordion.Body>
                         </Accordion.Item>
@@ -616,10 +625,10 @@ const Header = () => {
                       <div className="max-w-7xxl w-full mx-auto px-[15px] justify-center flex" >
 
                         {/* ============================================================= */}
-                       
+
                         <ul className="py-[50px] text-sm font-medium flex  gap-[20px] xl:gap-[30px] justify-center items-center text-center">
-                       <CategoryMenu/>
-                         
+                          <CategoryMenu />
+
                         </ul>
                       </div>
                     </div >
@@ -668,7 +677,7 @@ const Header = () => {
                                 <li className="py-[5px] font-medium">
                                   <a href="#" className='hover:text-primary-red hover:no-underline no-underline'>T-shirts</a>
                                 </li>
-                                <li className="py-[5px] font-medium" > 
+                                <li className="py-[5px] font-medium" >
                                   <a href="#" className='hover:text-primary-red hover:no-underline no-underline' >Tracksuits</a>
                                 </li >
                                 <li className="py-[5px] font-medium">

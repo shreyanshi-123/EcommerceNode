@@ -23,11 +23,11 @@ div#root {
   position: relative;
 }
 
-.instagram-slider .slider-item:hover a::after {
+.instagram-slider .slider-item:hover::after {
     opacity: 0.7;
     visibility: visible;
 }
-.instagram-slider .slider-item a::after {
+.instagram-slider .slider-item::after {
     content: '';
     position: absolute;
     top: 0;

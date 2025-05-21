@@ -53,7 +53,7 @@ const Footer = () => {
                             <ul className=" text-black">
                                 {menu.links.map((link, i) => (
                                     <li key={i} className='mt-[3px] leading-[1.6]' >
-                                        <a href="#" className="hover:text-black transition-colors text-[15px]">{link}</a>
+                                        <a href="#" className="hover:text-black transition-colors text-[15px] hover:text-primary-red">{link}</a>
                                     </li>
                                 ))}
                             </ul>
