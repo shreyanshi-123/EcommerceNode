@@ -133,7 +133,7 @@ const Category = () => {
                                         </div>
                                         <div className="category-content">
                                             <h3 className="entry-title text-[16px] font-medium text-blact text-center">
-                                                <a href="#">{el.category}</a>
+                                                <a href="#" className="hover:text-primary-red hover:no-underline no-underline">{el.category}</a>
                                             </h3>
                                         </div>
                                     </div>

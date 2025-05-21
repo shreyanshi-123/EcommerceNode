@@ -28,8 +28,8 @@ const Home = () => {
 
             <BannerSlider />
             <FreeShipping />
-            {/* <NewCollection1 /> */}
-            {/* <NewCollection2 /> */}
+            <NewCollection1 />
+            <NewCollection2 />
             <Category />
             <Signature />
             <Review />

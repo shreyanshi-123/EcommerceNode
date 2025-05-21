@@ -328,10 +328,10 @@ const Header = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${baseUrl}/api/get-category`);
-         console.log(response)
-        // if (!response.ok) throw new Error('Network response was not ok');
+         console.log(await response.json())
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        // console.log(await response.json())
+        console.log(data)
         setCategories(data);
       } catch {
         setError(true);
@@ -470,7 +470,7 @@ const Header = () => {
                           </Accordion.Header>
                           <Accordion.Body>
 
-                            {categories.map(({ id, item }) => (
+                            {category.map(({ id, item }) => (
                               <a href="#" className='text-black hover:text-primary-red'>    <li key={id} className='text-black text-[15px] py-[4px] leading-[1.5]'>{item}</li></a>
                             ))}
 
@@ -520,7 +520,7 @@ const Header = () => {
 
                   <div className=" group  h-[84px] flex items-center">
 
-                    <a href='/' className="uppercase flex items-center gap-1 ">
+                    <a href='/' className="uppercase flex items-center gap-1 text-white hover:no-underline no-underline">
                       SHOP
                       <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
                     </a>
@@ -535,7 +535,7 @@ const Header = () => {
                             <ul className="space-y-1 text-sm pt-[5px] ">
                               {row1.map(({ id, item }) => (
                                 <li key={id}>
-                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red">{item}</a>
+                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">{item}</a>
                                 </li>
                               ))}
 
@@ -543,7 +543,7 @@ const Header = () => {
                             <ul className="space-y-1 text-sm">
                               {row2.map(({ id, item }) => (
                                 <li key={id}>
-                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red">{item}</a>
+                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">{item}</a>
                                 </li>
                               ))}
 
@@ -560,7 +560,7 @@ const Header = () => {
                             <ul className="space-y-1 text-sm pt-[5px] ">
                               {row11.map(({ id, item }) => (
                                 <li key={id}>
-                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red">{item}</a>
+                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">{item}</a>
                                 </li>
                               ))}
 
@@ -568,7 +568,7 @@ const Header = () => {
                             <ul className="space-y-1 text-sm">
                               {row22.map(({ id, item }) => (
                                 <li key={id}>
-                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red">{item}</a>
+                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">{item}</a>
                                 </li>
                               ))}
 
@@ -586,7 +586,7 @@ const Header = () => {
                             <ul className="space-y-1 text-sm pt-[5px] ">
                               {row111.map(({ id, item }) => (
                                 <li key={id}>
-                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red">{item}</a>
+                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">{item}</a>
                                 </li>
                               ))}
 
@@ -594,7 +594,7 @@ const Header = () => {
                             <ul className="space-y-1 text-sm">
                               {row222.map(({ id, item }) => (
                                 <li key={id}>
-                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red">{item}</a>
+                                  <a href="#" className=" py-[4px] font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">{item}</a>
                                 </li>
                               ))}
 
@@ -607,7 +607,7 @@ const Header = () => {
                   </div>
 
                   <div className=" group h-[84px] flex items-center">
-                    <a href='/' className="uppercase flex items-center gap-1">
+                    <a href='/' className="uppercase flex items-center gap-1 text-white hover:no-underline no-underline">
                       CATEGORY
                       <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
                     </a>
@@ -621,12 +621,12 @@ const Header = () => {
                             const fileName = imageFileNames[category.category] || 'default.jpg';
                             const imageUrl = `${baseUrl}/assets/images/dropdowns/${fileName}`;
 
-                            
+                            return (
 
 
                               <li key={index} className='flex flex-col'>
                                 <div className="rounded-[50%] h-[150px] 5xl:h-[166px] xl:h-[179.156px] w-[150px] 5xl:w-[166px] xl:w-[179.156px] bg-[#f3f3f3] overflow-hidden rounded-dropdown">
-                                  <a href="">  <LazyLoadImage
+                                  <a href="" >  <LazyLoadImage
                                     src={imageUrl}
                                     alt={category.category}
                                     className="category w-full h-full object-contain"
@@ -635,12 +635,12 @@ const Header = () => {
 
                                   </a>
                                 </div>
-                                <a href="#" className="pt-[20px] text-[17px] leading-[1.4] hover:text-primary-red">{category.category}</a>
+                                <a href="#" className="pt-[20px] text-[17px] leading-[1.4] hover:text-primary-red hover:no-underline no-underline">{category.category}</a>
 
                               </li>
 
 
-                           
+                            );
                           })}
                           {/* {category.map(({ id, item,image }) => (
                          
@@ -665,7 +665,7 @@ const Header = () => {
                     </div >
                   </div>
                   <div className=" group h-[84px] flex items-center">
-                    <a href='/' className="uppercase flex items-center gap-1">
+                    <a href='/' className="uppercase flex items-center gap-1 text-white hover:no-underline no-underline">
                       MEN
                       <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
                     </a>
@@ -677,45 +677,45 @@ const Header = () => {
                             <div className="grid grid-cols-3 gap-4">
                               <ul className=" text-[17px] leading-[22px]">
                                 <li className="py-[5px] font-medium" >
-                                  <a href="#" className='hover:text-primary-red' >Jackets & Coats</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline' >Jackets & Coats</a>
                                 </li>
                                 <li className="py-[5px] font-medium" >
-                                  <a href="#" className='hover:text-primary-red'>Jeans</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline'>Jeans</a>
                                 </li>
                                 <li className="py-[5px] font-medium">
-                                  <a href="#" className='hover:text-primary-red' >Loungewear</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline' >Loungewear</a>
                                 </li>
                                 <li className="py-[5px] font-medium">
-                                  <a href="#" className='hover:text-primary-red'>Polo shirts</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline'>Polo shirts</a>
                                 </li>
                               </ul>
 
                               <ul className="text-[17px] leading-[22px]">
                                 <li className="py-[5px] font-medium" >
-                                  <a href="#" className='hover:text-primary-red'>Shirts</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline'>Shirts</a>
                                 </li>
                                 <li className="py-[5px] font-medium" >
-                                  <a href="#" className='hover:text-primary-red'>Shorts</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline'>Shorts</a>
                                 </li>
                                 <li className="py-[5px] font-medium" >
-                                  <a href="#" className='hover:text-primary-red'>Suits</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline'>Suits</a>
                                 </li>
                                 <li className="py-[5px] font-medium" >
-                                  <a href="#" className='hover:text-primary-red' >Swimwear</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline' >Swimwear</a>
                                 </li>
                               </ul>
                               <ul className=" text-[17px] leading-[22px]">
                                 <li className="py-[5px] font-medium">
-                                  <a href="#" className='hover:text-primary-red'>T-shirts</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline'>T-shirts</a>
                                 </li>
-                                <li className="py-[5px] font-medium" >
-                                  <a href="#" className='hover:text-primary-red' >Tracksuits</a>
+                                <li className="py-[5px] font-medium" > 
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline' >Tracksuits</a>
                                 </li >
                                 <li className="py-[5px] font-medium">
-                                  <a href="#" className='hover:text-primary-red'>Trousers</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline'>Trousers</a>
                                 </li>
                                 <li className="py-[5px] font-medium">
-                                  <a href="#" className='hover:text-primary-red' > Underwear</a>
+                                  <a href="#" className='hover:text-primary-red hover:no-underline no-underline' > Underwear</a>
                                 </li>
                               </ul>
                             </div>
@@ -738,7 +738,7 @@ const Header = () => {
                     </div >
                   </div>
                   <div className=" group h-[84px] flex items-center">
-                    <a href='/' className="uppercase flex items-center gap-1">
+                    <a href='/' className="uppercase flex items-center gap-1 text-white hover:no-underline no-underline">
                       WOMEN
                       <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
                     </a>
@@ -751,39 +751,39 @@ const Header = () => {
                           <div className="grid">
                             <ul className="space-y-1 text-[17px] flex flex-col">
                               <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red">Dresses</a>
+                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Dresses</a>
                               </li>
                               <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className="  py-[5px]  font-medium pr-[30px]">Jackets & Coats</a>
+                                <a href="#" className="  py-[5px]  font-medium pr-[30px] hover:no-underline no-underline">Jackets & Coats</a>
                               </li>
                               <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className="  py-[5px]  font-medium pr-[30px] hover:text-primary-red">Jeans</a>
+                                <a href="#" className="  py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Jeans</a>
                               </li>
                               <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red">Lingerie</a>
-                              </li>
-
-                              <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red">Loungewear</a>
-                              </li>
-                              <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red">Shorts</a>
-                              </li>
-                              <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red">Skirts</a>
-                              </li>
-                              <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red">Suits</a>
+                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Lingerie</a>
                               </li>
 
                               <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red">Swimwear</a>
+                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Loungewear</a>
                               </li>
                               <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red">Top</a>
+                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Shorts</a>
                               </li>
                               <li className='m-0 leading-[1.6] py-[2.5px]'>
-                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red">Trousers</a>
+                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Skirts</a>
+                              </li>
+                              <li className='m-0 leading-[1.6] py-[2.5px]'>
+                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Suits</a>
+                              </li>
+
+                              <li className='m-0 leading-[1.6] py-[2.5px]'>
+                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Swimwear</a>
+                              </li>
+                              <li className='m-0 leading-[1.6] py-[2.5px]'>
+                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Top</a>
+                              </li>
+                              <li className='m-0 leading-[1.6] py-[2.5px]'>
+                                <a href="#" className=" py-[5px]  font-medium pr-[30px] hover:text-primary-red hover:no-underline no-underline">Trousers</a>
                               </li>
 
                             </ul>

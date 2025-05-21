@@ -43,7 +43,7 @@ const ShopNow = () => {
                                     onMouseEnter={() => setActiveProduct('one')}
                                     onMouseLeave={() => setActiveProduct(null)}
                                 >
-                                    <a href="javascript:void(0)" className={`product-card-one max-w-[410px] w-full max-h-[260px] h-full absolute left-[-6%] top-[32%] ${activeProduct === 'one' ? 'active' : ''}`}>
+                                    <a href="javascript:void(0)" className={`product-card-one max-w-[410px] w-full max-h-[260px] h-full absolute left-[-6%] top-[32%] hover:no-underline no-underline hover:text-black ${activeProduct === 'one' ? 'active' : ''}`}>
 
                                         <div className="product-wrapper flex items-center bg-white">
                                             <div className="image-part w-[48%] relative">
@@ -52,8 +52,8 @@ const ShopNow = () => {
 
                                             </div>
                                             <div className="product-info-shop w-[52%]">
-                                                <h3 className='productname mb-[8px]'>Raw denim shorts with sequins</h3>
-                                                <p className='price-of-product mb-[8px]'>$69.00</p>
+                                                <h3 className='productname mb-[8px] hover:no-underline no-underline'>Raw denim shorts with sequins</h3>
+                                                <p className='price-of-product mb-[8px] hover:no-underline no-underline'>$69.00</p>
                                                 <div className="review-product my-[15px]">
                                                     <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
                                                     <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
@@ -61,7 +61,7 @@ const ShopNow = () => {
                                                     <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
                                                     <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#e6e6e6]" />
                                                 </div>
-                                                <div className="btn-shop-prod" > <a href=""> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert' />Add to cart</button></a></div>
+                                                <div className="btn-shop-prod" > <a href="" className='hover:no-underline no-underline'> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert hover:no-underline no-underline' />Add to cart</button></a></div>
 
                                             </div>
                                         </div>
@@ -76,7 +76,7 @@ const ShopNow = () => {
                                     onMouseLeave={() => setActiveProduct(null)}
                                 >
                                     <div className="" >
-                                        <a href="javascript:void(0)" className={`product-card-two max-w-[410px] w-full max-h-[260px] h-full absolute top-[22%] right-[11%] ${activeProduct === 'two' ? 'active' : ''}`}>
+                                        <a href="javascript:void(0)" className={`product-card-two max-w-[410px] w-full max-h-[260px] h-full absolute top-[22%] right-[11%] hover:no-underline no-underline hover:text-black ${activeProduct === 'two' ? 'active' : ''}`}>
 
 
 
@@ -87,8 +87,8 @@ const ShopNow = () => {
 
                                                 </div>
                                                 <div className="product-info-shop w-[52%]">
-                                                    <h3 className='productname mb-[8px]'>Women's slim-fit cotton tank</h3>
-                                                    <p className='price-of-product mb-[8px]'>$16.00</p>
+                                                    <h3 className='productname mb-[8px] hover:no-underline no-underline'>Women's slim-fit cotton tank</h3>
+                                                    <p className='price-of-product mb-[8px] hover:no-underline no-underline'>$16.00</p>
                                                     <div className="review-product my-[15px]">
                                                         <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
                                                         <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
@@ -96,7 +96,7 @@ const ShopNow = () => {
                                                         <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
                                                         <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#e6e6e6]" />
                                                     </div>
-                                                    <div className="btn-shop-prod" > <a href=""> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert' />Add to cart</button></a></div>
+                                                    <div className="btn-shop-prod" > <a href="" className='hover:no-underline no-underline'> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert ' />Add to cart</button></a></div>
 
                                                 </div>
                                             </div>
@@ -112,7 +112,7 @@ const ShopNow = () => {
                                     onMouseLeave={() => setActiveProduct(null)}
                                 >
                                     <div className="" >
-                                        <a href="javascript:void(0)" className={`product-card-three max-w-[410px] w-full max-h-[260px] h-full absolute left-[-7%] bottom-[5%] ${activeProduct === 'three' ? 'active' : ''}`}>
+                                        <a href="javascript:void(0)" className={`product-card-three max-w-[410px] w-full max-h-[260px] h-full absolute left-[-7%] bottom-[5%] hover:no-underline no-underline hover:text-black ${activeProduct === 'three' ? 'active' : ''}`}>
 
                                             <div className="product-wrapper flex items-center bg-white">
                                                 <div className="image-part w-[48%] relative">
@@ -121,8 +121,8 @@ const ShopNow = () => {
 
                                                 </div>
                                                 <div className="product-info-shop w-[52%]">
-                                                    <h3 className='productname mb-[8px]'>Textured vegan leather moto jacket</h3>
-                                                    <p className='price-of-product mb-[8px]'>$693.00-$699.00</p>
+                                                    <h3 className='productname mb-[8px] hover:no-underline no-underline'>Textured vegan leather moto jacket</h3>
+                                                    <p className='price-of-product mb-[8px] hover:no-underline no-underline'>$693.00-$699.00</p>
                                                     <div className="review-product my-[15px]">
                                                         <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
                                                         <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
@@ -130,7 +130,7 @@ const ShopNow = () => {
                                                         <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
                                                         <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#e6e6e6]" />
                                                     </div>
-                                                    <div className="btn-shop-prod" > <a href=""> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert' />Select options</button></a></div>
+                                                    <div className="btn-shop-prod" > <a href="" className='hover:no-underline no-underline'> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert hover:no-underline no-underline' />Select options</button></a></div>
 
                                                 </div>
                                             </div>

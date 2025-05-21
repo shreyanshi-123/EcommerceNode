@@ -209,7 +209,7 @@ const ProductCard = ({ product, badge }) => {
             </div>
           </div>
         </div>
-        <h3 class="product-title text-[15px] mb-[8px]"><a href="#">{product.title}</a></h3>
+        <h3 class="product-title text-[15px] mb-[8px]"><a href="#" className='hover:no-underline no-underline hover:text-primary-red'>{product.title}</a></h3>
         <span class="price">
 
           <span class="woocommerce-Price-amount amount font-[14.1px] opacity-[0.3] line-through mr-2">

@@ -41,7 +41,7 @@ const Review = () => {
                         </div>
                         <div class="">
                             <div class="">
-                                <div class="flex clotya-button has-icon"><a class=" flex justify-center items-center  clotya-btn border-1 border-solid border-[#ddd] py-[8px] px-[15px] text-[15px] font-medium leading-[1.4] h-[42px] rounded-[2px] hover:text-white hover:border-[#8f8f8f] hover:bg-[#8f8f8f]" href="#">Shop Now  <FontAwesomeIcon icon={faLongArrowRight} className="ml-[10px] text-[18px]" /></a></div></div>	</div>
+                                <div class="flex clotya-button has-icon"><a class=" flex justify-center items-center  clotya-btn border-1 border-solid border-[#ddd] py-[8px] px-[15px] text-[15px] font-medium leading-[1.4] h-[42px] rounded-[2px] hover:text-white hover:border-[#8f8f8f] hover:bg-[#8f8f8f] hover:no-underline no-underline" href="#">Shop Now  <FontAwesomeIcon icon={faLongArrowRight} className="ml-[10px] text-[18px]" /></a></div></div>	</div>
                     </div>
                     <div class="">
                         <div class="">

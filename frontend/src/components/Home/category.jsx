@@ -20,7 +20,7 @@ const Categoryy = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/GetCategory');
+        const response = await fetch('http://localhost:5000/api/get-category');
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         setCategories(data);
@@ -38,7 +38,7 @@ const Categoryy = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <header>
+    <section>
       <div>
         <h1>Categories</h1>
         <ul>
@@ -55,7 +55,7 @@ const Categoryy = () => {
           })}
         </ul>
       </div>
-    </header>
+    </section>
   );
 };
 
