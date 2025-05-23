@@ -4,7 +4,7 @@ const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.set("strictQuery", false);
 
-const connectDatabase = () => { mongoose.connect('mongodb+srv://shreyanshi:wvq9lKZsEp3024Uu@cluster0.ge0id7d.mongodb.net/?retryWrites=true&w=majority', {
+const connectDatabase = () => { mongoose.connect('mongodb+srv://shreyanshi:wvq9lKZsEp3024Uu@cluster0.ge0id7d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
   useUnifiedTopology: true,
 
