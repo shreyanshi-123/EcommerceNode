@@ -267,6 +267,7 @@
 .shop-now {
     border: 1px solid #ee403d;
 }
+
 .shop-now:hover {
     color: #ee403d !important;
 }
@@ -528,11 +529,13 @@ opacity: 1;
     transition: transform 1s ease;
     will-change: transform;
     overflow-y: auto;
-   
+
 }
-.loop-add-to-cart:hover{
-    background: #ee403d!important;
+
+.loop-add-to-cart:hover {
+    background: #ee403d !important;
 }
+
 .sidebar.open {
     transform: translate(0px, 0px);
     /* When open, move to the left 0px */
@@ -754,30 +757,31 @@ button.accordion-button {
 
 @media (max-width:1023px) {
     .banner-section:hover .slick-arrow {
-        display: none!important;
+        display: none !important;
     }
 }
+
 .button-in:hover a {
-    color: #fff!important;
+    color: #fff !important;
 }
 
 .other-Page nav a {
-    color: #000!important;
+    color: #000 !important;
 }
 
-.other-Page  img.header-logo {
+.other-Page img.header-logo {
     filter: invert(1);
 }
+
 .other-Page .right-icons svg {
     color: #000 !important;
     /* filter: invert(1); */
 }
+
 .other-Page .CartAmount {
-    color: #000!important;
+    color: #000 !important;
 }
 
 .other-Page .navigation {
-    border:1px solid #dee0ea ;
+    border-bottom: 1px solid #dee0ea;
 }
-
-    
