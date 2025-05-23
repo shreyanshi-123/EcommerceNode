@@ -23,7 +23,7 @@ function UserLogin() {
   };
 
   return (
-    <div className='my-[120px] max-w-7xl mx-auto justify-center flex'>
+    <div className='my-[200px] max-w-7xl mx-auto justify-center flex'>
       <div className='flex flex-col w-1/4 border rounded-[10px] p-[20px]'>
         <h2 className='mb-4 text-lg font-semibold'>User Login</h2>
 

@@ -1,4 +1,5 @@
 // import React, { useState } from 'react';
+import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Accordion from 'react-bootstrap/Accordion';
@@ -301,6 +302,7 @@ const Women = [
 
 
 const Header = () => {
+  
   // const [menuOpen, setMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);  // This controls the menu's visibility
@@ -314,7 +316,9 @@ const Header = () => {
   const [error, setError] = useState(null);
 
   const baseUrl = process.env.REACT_APP_API_URL;
-
+  const location = useLocation();
+  const pathname = location.pathname;
+const locationValue = pathname.split("/");
   // Optional: Map display names to image file names
   const imageFileNames = {
     Women: 'accessories-women-cat.jpg',
@@ -339,6 +343,8 @@ const Header = () => {
     };
 
     fetchData();
+
+    
   }, []);
 
   //    if (loading) return <div>Loading...</div>;
@@ -353,7 +359,7 @@ const Header = () => {
 
 
   return (
-    <header className="relative z-50">
+    <header className={`relative z-50 ${locationValue[1] === ""  ? 'sticky home-header' : 'sticky other-Page'}`}>
       {/* Promo Bar */}
 
       {/* Navigation Bar */}

@@ -760,3 +760,24 @@ button.accordion-button {
 .button-in:hover a {
     color: #fff!important;
 }
+
+.other-Page nav a {
+    color: #000!important;
+}
+
+.other-Page  img.header-logo {
+    filter: invert(1);
+}
+.other-Page .right-icons svg {
+    color: #000 !important;
+    /* filter: invert(1); */
+}
+.other-Page .CartAmount {
+    color: #000!important;
+}
+
+.other-Page .navigation {
+    border:1px solid #dee0ea ;
+}
+
+    
