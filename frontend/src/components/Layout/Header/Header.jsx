@@ -841,12 +841,12 @@ const Header = () => {
               {/* Right: Icons */}
               <div className="flex items-center  right-icons relative ">
                 <div className="h-[36px] w-[32px] flex justify-center items-center user-btn">
-                  <FontAwesomeIcon
+                  <a href="/user/login"> <FontAwesomeIcon
 
                     icon={faUser}
                     className={`text-white  cursor-pointer`}
                     size="lg"
-                  /></div>
+                  /></a></div>
                 <div className="h-[36px] w-[32px]  flex justify-center items-center ml-2.5 search-btn">
                   <FontAwesomeIcon
 
