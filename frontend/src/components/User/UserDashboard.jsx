@@ -24,7 +24,7 @@ function UserDashboard() {
         <p className='mb-4'>Welcome to your dashboard!</p>
         <button
           onClick={handleLogout}
-          className='hover:bg-white border border-black text-white bg-black py-[10px] px-[20px] rounded-[5px]'
+          className='hover:text-black hover:bg-white border border-black text-white bg-black py-[10px] px-[20px] rounded-[5px]'
         >
           Logout
         </button>

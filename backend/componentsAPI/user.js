@@ -27,9 +27,9 @@ const allUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
         // insert array to mongodb
-        const checkbox = req.body.car ;
+        // const checkbox = req.body.car ;
       
-        console.log(checkbox);
+        // console.log(checkbox);
       
         // Create a new user
     const  alluser = new User({
@@ -37,7 +37,7 @@ const allUser = async (req, res) => {
             email: req.body.email,
             password: hashedPassword,  // Store the hashed password
             date: Date(),
-            car: checkbox
+            // car: checkbox
         });
 
         // Save the user to the database

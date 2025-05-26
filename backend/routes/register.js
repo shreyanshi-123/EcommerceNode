@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const GetCategory = require('../productAPI/getCategory');  // Import controller
+const GetCategory = require('../componentsAPI/getCategory');
+const AddUser = require('../componentsAPI/user');
+const GetUser = require('../componentsAPI/getUser');
+const Login = require('../componentsAPI/login');
 
-// Define a route to GET categories
 router.get('/get-category', GetCategory);
+router.get('/get-user/:id', GetUser);       
+router.post('/register-user', AddUser);
+router.get('/login', Login);
+
 
 module.exports = router;

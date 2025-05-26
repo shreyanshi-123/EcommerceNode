@@ -867,7 +867,7 @@ const locationValue = pathname.split("/");
                     className={`text-white  cursor-pointer`}
                     size="lg"
                   />
-                  <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[-2px] min-h-[15px] min-w-[15px] py-[2px] flex items-center justify-center">0</span>
+                  <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[-2px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
 
                 </div>
                 <div className='header-button'>
@@ -881,7 +881,7 @@ const locationValue = pathname.split("/");
                           className={`text-white  cursor-pointer`}
                           size="lg"
                         />
-                        <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[0px] min-h-[15px] min-w-[15px] py-[2px] flex items-center justify-center">0</span>
+                        <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[0px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
                       </div>
                     </div>
                   </a>
