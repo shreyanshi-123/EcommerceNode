@@ -8,7 +8,7 @@ const Login = require('../componentsAPI/login');
 router.get('/get-category', GetCategory);
 router.get('/get-user/:id', GetUser);       
 router.post('/register-user', AddUser);
-router.get('/login', Login);
+router.post('/login', Login);
 
 
 module.exports = router;

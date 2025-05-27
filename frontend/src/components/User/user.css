@@ -11,3 +11,6 @@
 .my-element.active div#login-form {
      opacity: 0;
 }
+.login-form{
+    height: fit-content;
+}

@@ -3,7 +3,9 @@ import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Accordion from 'react-bootstrap/Accordion';
-import CategoryMenu from './category'
+import CategoryMenu from './category';
+import UserDashboard from '../../User/UserDashboard';
+import ProtectedRoute from '../../User/ProtectedRoute';
 
 import {
   // faHeart,
@@ -302,7 +304,7 @@ const Women = [
 
 
 const Header = () => {
-  
+
   // const [menuOpen, setMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);  // This controls the menu's visibility
@@ -318,7 +320,7 @@ const Header = () => {
   const baseUrl = process.env.REACT_APP_API_URL;
   const location = useLocation();
   const pathname = location.pathname;
-const locationValue = pathname.split("/");
+  const locationValue = pathname.split("/");
   // Optional: Map display names to image file names
   const imageFileNames = {
     Women: 'accessories-women-cat.jpg',
@@ -328,6 +330,10 @@ const locationValue = pathname.split("/");
     Glasses: 'glasses-cat.jpg',
     jewellery: 'jewelry-cat.jpg',
   };
+
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(
+    localStorage.getItem('isUserLoggedIn') === 'true'
+  );
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -344,7 +350,7 @@ const locationValue = pathname.split("/");
 
     fetchData();
 
-    
+
   }, []);
 
   //    if (loading) return <div>Loading...</div>;
@@ -359,7 +365,7 @@ const locationValue = pathname.split("/");
 
 
   return (
-    <header className={`relative z-50 ${locationValue[1] === ""  ? 'sticky home-header' : 'sticky other-Page'}`}>
+    <header className={`relative z-50 ${locationValue[1] === "" ? 'sticky home-header' : 'sticky other-Page'}`}>
       {/* Promo Bar */}
 
       {/* Navigation Bar */}
@@ -847,64 +853,74 @@ const locationValue = pathname.split("/");
               {/* Right: Icons */}
               <div className="flex items-center  right-icons relative ">
                 <div className="h-[36px] w-[32px] flex justify-center items-center user-btn">
-                  <a href="/user/login"> <FontAwesomeIcon
-
-                    icon={faUser}
-                    className={`text-white  cursor-pointer`}
-                    size="lg"
-                  /></a></div>
-                <div className="h-[36px] w-[32px]  flex justify-center items-center ml-2.5 search-btn">
-                  <FontAwesomeIcon
-
-                    icon={faSearch}
-                    className={`text-white  cursor-pointer`}
-                    size="lg"
-                  /></div>
-                <div className="h-[36px] w-[32px]  flex justify-center items-center ml-2.5 heart-btn relative" >
-                  <FontAwesomeIcon
-
-                    icon={faHeart}
-                    className={`text-white  cursor-pointer`}
-                    size="lg"
-                  />
-                  <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[-2px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
-
-                </div>
-                <div className='header-button'>
-                  <a href="#" className=''>
-                    <div className='flex  ml-2.5 cart-btn ' >
-                      <span className='text-black lg:text-white text-[13px] CartAmount'>$0.00</span>
-                      <div className="relative h-[36px] w-[32px] justify-center flex items-center">
-                        <FontAwesomeIcon
-
-                          icon={faShoppingBag}
-                          className={`text-white  cursor-pointer`}
-                          size="lg"
-                        />
-                        <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[0px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
-                      </div>
-                    </div>
-                  </a>
-                  <div class="cart-dropdown ">
-                    <div class="cart-dropdown-wrapper">
-                      <div class="fl-mini-cart-content">
 
 
-                        <div class="cart-empty">
-                          <div class="empty-icon">
-                            <img src={ShoppingBag} alt="" />
-                          </div>
-                          <div class="empty-text">No products in the cart.</div>
+                  <a href="/user/dashboard" element={
+                    <ProtectedRoute isLoggedIn={!isUserLoggedIn} redirectPath="/user/login" >
+                      <UserDashboard />
+                    </ProtectedRoute>
+                  } >
+                    <FontAwesomeIcon
+                      icon={faUser}
+                      className={`text-white  cursor-pointer`}
+                      size="lg"
+                    />
+                  </a></div>
+                  {/* <a href="/user/login"> </a></div> */}
+                  <div className="h-[36px] w-[32px]  flex justify-center items-center ml-2.5 search-btn">
+                    <FontAwesomeIcon
+
+                      icon={faSearch}
+                      className={`text-white  cursor-pointer`}
+                      size="lg"
+                    /></div>
+                  <div className="h-[36px] w-[32px]  flex justify-center items-center ml-2.5 heart-btn relative" >
+                    <FontAwesomeIcon
+
+                      icon={faHeart}
+                      className={`text-white  cursor-pointer`}
+                      size="lg"
+                    />
+                    <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[-2px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
+
+                  </div>
+                  <div className='header-button'>
+                    <a href="#" className=''>
+                      <div className='flex  ml-2.5 cart-btn ' >
+                        <span className='text-black lg:text-white text-[13px] CartAmount'>$0.00</span>
+                        <div className="relative h-[36px] w-[32px] justify-center flex items-center">
+                          <FontAwesomeIcon
+
+                            icon={faShoppingBag}
+                            className={`text-white  cursor-pointer`}
+                            size="lg"
+                          />
+                          <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[0px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
                         </div>
+                      </div>
+                    </a>
+                    <div class="cart-dropdown ">
+                      <div class="cart-dropdown-wrapper">
+                        <div class="fl-mini-cart-content">
 
+
+                          <div class="cart-empty">
+                            <div class="empty-icon">
+                              <img src={ShoppingBag} alt="" />
+                            </div>
+                            <div class="empty-text">No products in the cart.</div>
+                          </div>
+
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-              </div> </div>
-          </div></div>
-      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       {/* </div> */}
 
     </header >

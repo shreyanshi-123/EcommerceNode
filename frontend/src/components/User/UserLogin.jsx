@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import './user.css'
 
 function UserLogin() {
+  // Register
+
+
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [users, setUsers] = useState([]);
@@ -27,33 +31,22 @@ function UserLogin() {
   };
 
 
-  // Fetch users on mount (if needed)
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/get-users');
-        if (!response.ok) throw new Error('Failed to fetch users');
-        const data = await response.json();
-        setUsers(data.users || []);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-    fetchUsers();
-  }, []);
+
 
 
 
   // REGISTER NEW USER
-  const registerUser = async () => {
+  const registerUser = async (e) => {
+    e.preventDefault();
+
     if (!formData.name || !formData.email || !formData.password) {
       alert('Please fill out all fields');
       return;
     }
 
-    // const tagsArray = formData.tags.split(',').map(item => item.trim());
     const newUserData = { ...formData };
-
+    const result = JSON.stringify(newUserData);
+    console.log(result)
     try {
       const response = await fetch(`http://localhost:5000/api/register-user`, {
         method: 'POST',
@@ -61,58 +54,63 @@ function UserLogin() {
         body: JSON.stringify(newUserData),
       });
 
-      if (!response.ok) throw new Error('Failed to add user');
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to add user: ${errorText}`);
+      }
+
       const newUser = await response.json();
-      setUsers(prevUsers => [...prevUsers, newUser]);
-      resetForm();
+      alert('User registered successfully');
+
+      localStorage.setItem('isUserLoggedIn', 'true');
+      sessionStorage.setItem('isUserLoggedIn', 'true');
       window.location.href = '/user/dashboard';
+
+    } catch (err) {
+      setError(err.message);
+      console.error(err);
+    }
+  };
+
+  // Login functionality
+
+  const loginUser = async (e) => {
+    e.preventDefault(); // Prevent the default form submission (page reload)
+
+    const signInData = { email, password };
+    console.log(signInData);
+    setError("");
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signInData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Invalid credentials or user not found");
+      }
+
+      const data = await response.json();
+
+       if (data.user.role ==='user') {
+      sessionStorage.setItem("user", JSON.stringify(data.user));
+      sessionStorage.setItem("token", data.token);
+      localStorage.setItem('isUserLoggedIn', 'true');
+      window.location.href = '/user/dashboard';
+      alert(`Welcome back, ${data.user.name}!`);
+       } else {
+         setError('Invalid User Role');
+      }
+
     } catch (err) {
       setError(err.message);
     }
   };
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Function to fetch users data from the server
-    // const fetchData = async () => {
-    //     try {
 
-    //         const response = await fetch(`{http://localhost:5000/api/get-user/${userId}`);
 
-    //         if (!response.ok) {
-    //             throw new Error('Failed to fetch user data');
-    //         }
 
-    //         const usersData = await response.json();
-    //         const usersArray = Array.isArray(usersData) ? usersData : usersData?.users || [];
-    //         setUsers(usersArray);  // Set the users state
-    //     } catch (err) {
-    //         setError(err.message);  // Handle error
-    //     } finally {
-    //         setLoading(false);  // Stop loading
-    //     }
-    // };
-
-    // Fetch users data on initial render
-    // useEffect(() => {
-    //     fetchData();  // Call the fetchData function
-    // }, []);  // Empty dependency array means this effect runs only once when the component mounts
-
-    const userUsername = process.env.REACT_APP_USER_USERNAME;
-    const userPassword = process.env.REACT_APP_USER_PASSWORD;
-    const email = process.env.REACT_APP_USER_EMAIL
-
-    if (username === userUsername && password === userPassword) {
-      localStorage.setItem('isUserLoggedIn', 'true');
-      sessionStorage.setItem('isUserLoggedIn', 'true');
-      window.location.href = '/user/dashboard';
-    } else {
-      setError('Error: Invalid username or password');
-    }
-  };
-  const resetForm = () => {
-    setFormData({ name: '', email: '', password: '' });
-    // setEditingBlog(null);
-  };
 
   return (
     <div className='mt-[40px] lg:mt-[200px] mb-[80px] max-w-7xl mx-auto  flex'>
@@ -146,20 +144,20 @@ function UserLogin() {
           </ul>
 
           <div className={`flex w-[200%] form-wrapper ${activeTab === 'login' ? 'my-element ' : 'my-element active'}`}>
-            <div id='login-form' className={`lg:border border-[#dee0ea;] rounded-[2px] lg:p-[60px] mt-[20px] px-[1px] w-full h-fit `}>
-              <form onSubmit={handleLogin} className='flex flex-col mt-[20px]'>
+            <div id='login-form' className={`lg:border border-[#dee0ea;] rounded-[2px] lg:p-[60px] mt-[20px] px-[1px] w-full h-fit login-form`}>
+              <form onSubmit={loginUser} className='flex flex-col mt-[20px]'>
                 <p className='mb-[16px]'>
-                  <label for="username" className=' text-[14px] mb-[5px]'>Username or email address&nbsp;<span class="required" aria-hidden="true">*</span></label>
+                  <label htmlFor="email" className=' text-[14px] mb-[5px]'>Email address&nbsp;<span class="required" aria-hidden="true">*</span></label>
                   <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder=""
                     className='border rounded-[3px] border-[#ddd] py-[8px] px-[15px] w-full'
                     required
                   /></p>
                 <p className='mb-[16px]'>
-                  <label for="password" className=' text-[14px] mb-[5px]'>Password&nbsp;<span class="required" aria-hidden="true">*</span></label>
+                  <label htmlFor="password" className=' text-[14px] mb-[5px]'>Password&nbsp;<span class="required" aria-hidden="true">*</span></label>
                   <input
                     type="password"
                     value={password}
@@ -173,7 +171,7 @@ function UserLogin() {
                   type="checkbox"
 
                   className='border rounded-[2px] border-[#ddd] py-[5px] px-[20px]'
-                  required
+
                 />
                   <span className=' text-[14px]'>Remember me</span>
 
@@ -185,7 +183,7 @@ function UserLogin() {
                 >
                   Login
                 </button>
-                {/* {error && <div className="text-black mb-[16px] p-[16px] border border-[#ddd] text-[14px]">{error}</div>} */}
+                {error && <div className="text-black mb-[16px] p-[16px] border border-[#ddd] text-[14px]">{error}</div>}
 
                 <p class="">
                   <a href="#" className='text-[16px] text-[#ee403d] no-underline'>Lost your password?</a>
@@ -243,8 +241,9 @@ function UserLogin() {
                 >
                   Register
                 </button>
-              </form>
 
+              </form>
+              {error && <div className="text-black mb-[16px] p-[16px] border border-[#ddd] text-[14px]">{error} </div>}
             </div>
           </div>
         </div>

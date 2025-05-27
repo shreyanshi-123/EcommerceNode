@@ -1,35 +1,53 @@
-const { default: UserDashboard } = require('../../frontend/src/components/User/UserDashboard');
-const { User, validate } = require('../models/user');
-
-const getSingleUser = async (req, res) => {
-
-   
+const jwt = require('jsonwebtoken');
+const { User } = require('../models/user');
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
+const SignIn = async (req, res) => {
+    const { email, password } = req.body;
 
     try {
-
-    //      const name = await User.find(req.params.name);
-    // console.log(req.params.name)
-    // const email = await User.find(req.params.email);
-    // console.log(req.params.email)
-
-    // const password = await User.find(req.params.password);
-    //  console.log(req.params.password)
-
- const user = User.find(u => (name === req.params.name || email === req.params.email) && password === req.params.password);
-       
-
         // Check if user exists
+        const user = await User.findOne({ email });
+        
+      
         if (!user) {
-            return res.status(404).json({ message: `User with email ${req.params.email} name ${req.params.email}  not found` });
+            return res.status(400).json({ message: 'Invalid email or password' });
         }
 
-        // Return the found user
-        res.json(user);
-    } catch (err) {
-        // Handle unexpected errors
-        console.error(err);
-        res.status(500).json({ message: 'Server error. Please try again later.' });
+        // Ensure password is not empty
+        if (!password || password.trim() === '') {
+            return res.status(400).json({ message: 'Password cannot be empty' });
+        }
+
+        // Compare entered password with stored hashed password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: 'Invalid email or password' });
+        }
+        console.log(user)
+        console.log('JWT_SECRET_KEY:', process.env.JWT_SECRET_KEY);
+        // Create and sign JWT token
+        const token = jwt.sign(
+            { userId: user._id, email: user.email },
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: '1h' }
+        );
+
+        // Send back user data and token
+        return res.json({
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+            },
+        });
+
+    } catch (error) {
+        console.error('Error during sign-in:', error);
+        res.status(500).json({ message: 'Server error, please try again later' });
     }
 };
 
-module.exports = getSingleUser;
+module.exports = SignIn;
