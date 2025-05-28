@@ -48,7 +48,7 @@ function UserLogin() {
     const result = JSON.stringify(newUserData);
     console.log(result)
     try {
-      const response = await fetch(`http://localhost:5000/api/register-user`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/register-user`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newUserData),
@@ -56,11 +56,11 @@ function UserLogin() {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Failed to add user: ${errorText}`);
+        throw new Error(`${errorText}`);
       }
 
       const newUser = await response.json();
-      alert('User registered successfully');
+    
 
       localStorage.setItem('isUserLoggedIn', 'true');
       sessionStorage.setItem('isUserLoggedIn', 'true');
@@ -82,7 +82,7 @@ function UserLogin() {
     setError("");
 
     try {
-      const response = await fetch(`http://localhost:5000/api/login`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(signInData),
@@ -99,7 +99,7 @@ function UserLogin() {
       sessionStorage.setItem("token", data.token);
       localStorage.setItem('isUserLoggedIn', 'true');
       window.location.href = '/user/dashboard';
-      alert(`Welcome back, ${data.user.name}!`);
+      
        } else {
          setError('Invalid User Role');
       }

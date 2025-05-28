@@ -6,6 +6,7 @@ function UserDashboard() {
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isUserLoggedIn');
+    console.log('loggedin');
     if (!isLoggedIn) {
       navigate('/user/login');
     }
