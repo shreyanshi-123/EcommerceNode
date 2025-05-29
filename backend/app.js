@@ -22,12 +22,14 @@ var corsOptions = {
 };
   
 app.use(cors(corsOptions));
+const path = require('path');
+app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 
 // const user = require('./routes/userRoute');
 // const product = require('./routes/productRoute');
 // const order = require('./routes/orderRoute');
 // const payment = require('./routes/paymentRoute');
-const category = require('./routes/register.js');
+const Routes = require('./routes/register.js');
 // const coupon = require('./routes/couponRoute');
 // const faq = require('./routes/faqRoute');
 // const blog = require('./routes/blogRoute');
@@ -38,7 +40,7 @@ const category = require('./routes/register.js');
 // app.use('/api/v1', product);
 // app.use('/api/v1', order);
 // app.use('/api/v1', payment);
-app.use('/api', category);
+app.use('/api', Routes);
 // app.use('/api/v1', coupon);
 // app.use('/api/v1', faq);
 // app.use('/api/v1', blog);

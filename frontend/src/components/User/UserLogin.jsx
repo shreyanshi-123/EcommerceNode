@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 import './user.css'
 
 function UserLogin() {
@@ -13,10 +14,11 @@ function UserLogin() {
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('login');
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-
+  const [loading, setLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [email, setEmail] = useState('');
   const [isActive, setIsActive] = useState(false);
+  const [formSuccess, setFormSuccess] = useState("");
   const navigate = useNavigate();
 
 
@@ -47,8 +49,10 @@ function UserLogin() {
     const newUserData = { ...formData };
     const result = JSON.stringify(newUserData);
     console.log(result)
+    setLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/register-user`, {
+      // const response = await fetch(`${process.env.REACT_APP_API_URL}/api/register-user`, {
+      const response = await fetch(`http://localhost:5000/api/register-user`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newUserData),
@@ -56,11 +60,26 @@ function UserLogin() {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`${errorText}`);
-      }
+        setLoading(false);
+        setError(`${errorText}`);
+         resetForm();
+        setTimeout(() => {
+          setError('');
 
+        }, 10000);
+       
+
+      }
+      setLoading(false);
+      setFormSuccess('registered successfully');
+      resetForm();
+        setTimeout(() => {
+          setFormSuccess('');
+
+        }, 10000);
+       
       const newUser = await response.json();
-    
+
 
       localStorage.setItem('isUserLoggedIn', 'true');
       sessionStorage.setItem('isUserLoggedIn', 'true');
@@ -68,7 +87,13 @@ function UserLogin() {
 
     } catch (err) {
       setError(err.message);
-      console.error(err);
+
+      setLoading(false);
+       resetForm();
+        setTimeout(() => {
+          setError('');
+
+        }, 10000);
     }
   };
 
@@ -80,36 +105,68 @@ function UserLogin() {
     const signInData = { email, password };
     console.log(signInData);
     setError("");
-
+    setLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
+      // const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
+      const response = await fetch(`http://localhost:5000/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(signInData),
       });
 
       if (!response.ok) {
-        throw new Error("Invalid credentials or user not found");
+        setLoading(false);
+
+        setError('Invalid credentials or user not found')
+        resetForm();
+        setTimeout(() => {
+          setError('');
+
+        }, 10000);
       }
 
       const data = await response.json();
 
-       if (data.user.role ==='user') {
-      sessionStorage.setItem("user", JSON.stringify(data.user));
-      sessionStorage.setItem("token", data.token);
-      localStorage.setItem('isUserLoggedIn', 'true');
-      window.location.href = '/user/dashboard';
-      
-       } else {
-         setError('Invalid User Role');
+      if (data.user.role === 'user') {
+        setLoading(false);
+        setFormSuccess('Loggedin successfully');
+        resetForm();
+        setTimeout(() => {
+          setFormSuccess('');
+
+        }, 10000);
+        sessionStorage.setItem("user", JSON.stringify(data.user));
+        sessionStorage.setItem("token", data.token);
+        localStorage.setItem('isUserLoggedIn', 'true');
+        window.location.href = '/user/dashboard';
+
+      } else {
+        setLoading(false);
+        setError('Invalid User Role');
+        resetForm();
+        setTimeout(() => {
+          setError('');
+
+        }, 10000);
       }
 
     } catch (err) {
+      setLoading(false);
       setError(err.message);
+      resetForm();
+      setTimeout(() => {
+        setError('');
+
+      }, 10000);
     }
   };
 
+  const resetForm = () => {
+    setUsername("")
+    setPassword('');
+    setEmail('');
 
+  }
 
 
   return (
@@ -183,8 +240,28 @@ function UserLogin() {
                 >
                   Login
                 </button>
-                {error && <div className="text-black mb-[16px] p-[16px] border border-[#ddd] text-[14px]">{error}</div>}
+                {error && <div className="text-primary-red mb-[16px] p-[16px] border border-[#ddd] text-[14px] ">{error}</div>}
+                {formSuccess && (
 
+
+                  <span className='mb-[16px] p-[16px] border border-[#ddd] text-[14px] text-success'>{formSuccess}</span>
+
+                )}
+                <div className='justify-center flex gap-2'>
+                  {loading && (<>
+                    <CircularProgress
+                      sx={{
+                        color: (theme) =>
+                          theme.palette.grey[theme.palette.mode === 'dark' ? 400 : 800],
+                      }}
+                      size={20}
+                      thickness={4}
+                      value={100}
+                    />
+                    Loading..
+                  </>
+                  )}
+                </div>
                 <p class="">
                   <a href="#" className='text-[16px] text-[#ee403d] no-underline'>Lost your password?</a>
                 </p>
@@ -243,7 +320,29 @@ function UserLogin() {
                 </button>
 
               </form>
-              {error && <div className="text-black mb-[16px] p-[16px] border border-[#ddd] text-[14px]">{error} </div>}
+              {error && <div className="text-primary-red mb-[16px] p-[16px] border border-[#ddd] text-[14px] ">{error}</div>}
+              {formSuccess && (
+
+
+                <span className='mb-[16px] p-[16px] border border-[#ddd] text-[14px] flex text-success'>{formSuccess}</span>
+
+              )}
+              
+              <div className='justify-center flex gap-2'>
+                {loading && (<>
+                  <CircularProgress
+                    sx={{
+                      color: (theme) =>
+                        theme.palette.grey[theme.palette.mode === 'dark' ? 400 : 800],
+                    }}
+                    size={20}
+                    thickness={4}
+                    value={100}
+                  />
+                  Loading..
+                </>
+                )}
+              </div>
             </div>
           </div>
         </div>

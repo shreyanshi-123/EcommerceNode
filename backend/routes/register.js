@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const GetCategory = require('../componentsAPI/getCategory');
-const AddUser = require('../componentsAPI/Adduser');
-const GetUser = require('../componentsAPI/getUser');
-const Login = require('../componentsAPI/login');
-const UserList = require('../componentsAPI/Userlist');
-
-
+const GetCategory = require('../UsersAPI/getCategory');
+const AddUser = require('../UsersAPI/Adduser');
+const GetUser = require('../UsersAPI/getUser');
+const Login = require('../UsersAPI/login');
+const UserList = require('../UsersAPI/Userlist');
+const DeleteUser = require('../UsersAPI/DeleteUser');
+const upload = require('../middlewares/multer'); 
 // Product
 // const addProduct = require('../ProductAPI/addProduct');
 // const getProduct = require('../ProductAPI/getProduct');
@@ -25,9 +25,16 @@ const UserList = require('../componentsAPI/Userlist');
 
 router.get('/get-category', GetCategory);
 router.get('/get-user/:id', GetUser);       
-router.post('/register-user', AddUser);
+// router.post('/register-user', upload.single('profileImage') , AddUser);
+router.delete('/deleteUser/:id', DeleteUser); 
 router.post('/login', Login);
-router.get('/user', UserList);
+router.get('/user' , UserList);
+
+// Upload middleware + user registration handler
+// app.post('/upload', upload.single('profileImage'), AddUser);
+
+router.post('/upload', upload.single('profileImage'), AddUser);
+
 
 
 module.exports = router;
