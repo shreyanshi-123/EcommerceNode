@@ -130,7 +130,7 @@ function UserLogin() {
       if (data.user.role === 'user') {
         setLoading(false);
         setFormSuccess('Loggedin successfully');
-        resetForm();
+       
         setTimeout(() => {
           setFormSuccess('');
 

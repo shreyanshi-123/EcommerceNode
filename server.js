@@ -56,27 +56,6 @@ process.on('unhandledRejection', (err) => {
 });
 
 
-// const express = require('express');
-// const multer = require('multer');
-// const path = require('path');
 
-// const app = express();
-
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'public/uploads'); // Destination folder
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
-//   },
-// });
-
-// const upload = multer({ storage: storage });
-// app.use(express.json());
-// app.use(express.static('public')); // Serve static files
-
-// app.post('/upload', upload.single('image'), (req, res) => {
-//   res.send({ message: 'Image uploaded successfully', filePath: `/uploads/${req.file.filename}` });
-// });
 
 app.listen(5000, () => console.log('Server listening on port 5000'));

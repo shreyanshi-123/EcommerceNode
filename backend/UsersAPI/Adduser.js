@@ -6,10 +6,10 @@ const express = require('express');
 
 // POST /api/admin/users with image upload
 const allUser = async (req, res) => {
-   console.log('File info:', req.file);  // Should log uploaded file info or undefined
-  if (!req.file) {
-    return res.status(400).send('No file uploaded');
-  }
+//    console.log('File info:', req.file);  
+//   if (!req.file) {
+//     return res.status(400).send('didnt get file');
+//   }
     // Validate user input (without image)
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -24,9 +24,9 @@ const allUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
         // Get uploaded file filename (if any)
-        const image =  req.file.filename;
+        const image =  req.body.image;
 
-        console.log(image)
+        // console.log(image)
         // Create new user object
         user = new User({
             name: req.body.name,
@@ -34,7 +34,7 @@ const allUser = async (req, res) => {
             password: hashedPassword,
             date: Date.now(),
             role: req.body.role,
-            profileImage: image,
+            image: image,
         });
 
         // Save user
