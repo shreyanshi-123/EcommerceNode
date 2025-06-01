@@ -1,46 +1,35 @@
-const category = require('../models/category');
+const Category = require('../models/category');
 
-const allcategories = async (req, res) => {
-    console.log("addcate");
+const addCategory = async (req, res) => {
+  try {
+    const { categories } = req.body;
 
-    try {
-        const { categories } = req.body;
-
-        // Basic validation
-        if (!categories || categories.trim() === '') {
-            return res.status(400).send('categories name is required.');
-        }
-
-        // Check if categories already exists by name
-        let existingcategories = await category.findOne({ categories });
-        if (existingcategories) {
-            return res.status(400).send('categories with this name already exists.');
-        }
-
-        // Get image from uploaded file or from body (if URL or base64)
-        let image = null;
-        if (req.file && req.file.filename) {
-            image = req.file.filename;  // multer uploaded filename
-        } else if (req.body.image) {
-            image = req.body.image;
-        }
-
-        // Create new categories document
-        const newcategories = new categories({
-            categories,
-            image,
-        });
-
-        // Save categories to DB
-        await newcategories.save();
-
-        // Respond with new categories
-        res.status(201).json(newcategories);
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error, please try again later.');
+    if (!categories || categories.trim() === '') {
+      return res.status(400).json({ message: 'Category name is required.' });
     }
+
+    // Check if category already exists
+    const existing = await Category.findOne({ categories });
+    if (existing) {
+      return res.status(400).json({ message: 'Category already exists.' });
+    }
+
+    let image = '';
+    if (req.file && req.file.filename) {
+      image = `/uploads/${req.file.filename}`; // match your frontend usage
+    }
+
+    const newCategory = new Category({
+      categories,
+      image,
+    });
+
+    await newCategory.save();
+    res.status(201).json({ message: 'Category added successfully', category: newCategory });
+  } catch (err) {
+    console.error('Add Category Error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
 };
 
-module.exports = allcategories;
+module.exports = addCategory;

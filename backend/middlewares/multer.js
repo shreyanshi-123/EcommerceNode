@@ -1,20 +1,17 @@
 const multer = require('multer');
 const path = require('path');
-console.log('reachedMultar')
-
-
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/uploads'); // Destination folder
+    cb(null, 'uploads/');
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
-  },
+    const ext = path.extname(file.originalname);
+    const name = file.originalname.split(' ')[0].replace(/\W+/g, '-');
+    cb(null, `${name}-${Date.now()}${ext}`);
+  }
 });
 
-const upload = multer({ storage: storage });
-
-
+const upload = multer({ storage });
 
 module.exports = upload;

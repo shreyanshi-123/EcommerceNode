@@ -1,16 +1,32 @@
+const Category = require('../models/category');
+const fs = require('fs');
+const path = require('path');
+
 const deleteCategory = async (req, res) => {
   try {
-    const categoryId = req.params.id;
+    const { id } = req.params;
 
-    const deletedCategory = await Category.findByIdAndDelete(categoryId);
-
-    if (!deletedCategory) {
-      return res.status(404).send('Category not found');
+    const category = await Category.findById(id);
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found.' });
     }
 
-    res.status(200).send('Category deleted successfully');
+    // Optional: Delete the image file from the server
+    if (category.image) {
+      const imagePath = path.join(__dirname, '..', 'uploads', path.basename(category.image));
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
+
+    // Delete category from DB
+    await Category.findByIdAndDelete(id);
+
+    res.status(200).json({ message: 'Category deleted successfully.' });
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error, please try again later.');
+    console.error('Delete Error:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 };
+
+module.exports = deleteCategory;
