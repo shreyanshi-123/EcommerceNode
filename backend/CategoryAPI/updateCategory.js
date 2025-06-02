@@ -3,25 +3,26 @@ const Category = require('../models/category');
 const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
+    const { category } = req.body;
 
-    if (!name || name.trim() === '') {
+    if (!category || category.trim() === '') {
       return res.status(400).json({ message: 'Category name is required.' });
     }
 
-    const category = await Category.findById(id);
-    if (!category) {
+    const gotcategory = await Category.findById(id);
+    if (!gotcategory) {
       return res.status(404).json({ message: 'Category not found.' });
     }
 
-    category.name = name;
+    // Update the fields of the category document
+    gotcategory.category = category;
 
-    // Update image if a file is uploaded
-    if (req.file) {
-      category.image = `/uploads/${req.file.filename}`;
+    // Check if image is provided and update it
+    if (req.body.image) {
+      gotcategory.image = `${req.body.image}`;
     }
 
-    const updated = await category.save();
+    const updated = await gotcategory.save();
     res.status(200).json(updated);
   } catch (err) {
     console.error('Update error:', err);

@@ -6,7 +6,9 @@ const Categoryy = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const baseUrl = process.env.REACT_APP_API_URL;
+     const baseUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:5000'  // or whatever your local API URL is
+        : process.env.REACT_APP_API_URL;
 
   // Optional: Map display names to image file names
   const imageFileNames = {
@@ -21,7 +23,7 @@ const Categoryy = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/get-category`);
+        const response = await fetch(`${baseUrl}/api/get-category`);
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         setCategories(data);

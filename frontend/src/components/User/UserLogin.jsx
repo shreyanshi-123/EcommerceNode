@@ -6,7 +6,9 @@ import './user.css'
 function UserLogin() {
   // Register
 
-
+  const baseUrl = window.location.hostname === 'localhost'
+    ? 'http://localhost:5000'  // or whatever your local API URL is
+    : process.env.REACT_APP_API_URL;
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -52,7 +54,7 @@ function UserLogin() {
     setLoading(true);
     try {
       // const response = await fetch(`${process.env.REACT_APP_API_URL}/api/register-user`, {
-      const response = await fetch(`http://localhost:5000/api/register-user`, {
+      const response = await fetch(`${baseUrl}/api/register-user`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newUserData),
@@ -62,22 +64,22 @@ function UserLogin() {
         const errorText = await response.text();
         setLoading(false);
         setError(`${errorText}`);
-         resetForm();
+        //  resetForm();
         setTimeout(() => {
           setError('');
 
         }, 10000);
-       
+
 
       }
       setLoading(false);
       setFormSuccess('registered successfully');
-      resetForm();
-        setTimeout(() => {
-          setFormSuccess('');
+      // resetForm();
+      setTimeout(() => {
+        setFormSuccess('');
 
-        }, 10000);
-       
+      }, 10000);
+
       const newUser = await response.json();
 
 
@@ -89,11 +91,11 @@ function UserLogin() {
       setError(err.message);
 
       setLoading(false);
-       resetForm();
-        setTimeout(() => {
-          setError('');
+      //  resetForm();
+      setTimeout(() => {
+        setError('');
 
-        }, 10000);
+      }, 10000);
     }
   };
 
@@ -101,59 +103,58 @@ function UserLogin() {
 
   const loginUser = async (e) => {
     e.preventDefault(); // Prevent the default form submission (page reload)
-
-    const signInData = { email, password };
+    const formData = new FormData(e.target);
+    const hiddenData = formData.get('hiddenData');
+    const signInData = { email, password, hiddenData };
     console.log(signInData);
     setError("");
     setLoading(true);
     try {
       // const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
-      const response = await fetch(`http://localhost:5000/api/login`, {
+      const response = await fetch(`${baseUrl}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(signInData),
       });
 
-      if (!response.ok) {
-        setLoading(false);
-
-        setError('Invalid credentials or user not found')
-        resetForm();
-        setTimeout(() => {
-          setError('');
-
-        }, 10000);
+       if (!response.ok) {
+      setLoading(false);
+      if (response.status === 403) {
+        throw new Error("User role is not authorized");
+      } else {
+        throw new Error("Invalid credentials or user not found");
       }
+    }
 
       const data = await response.json();
 
-      if (data.user.role === 'user') {
+      // if (data.user.role === 'user') {
         setLoading(false);
         setFormSuccess('Loggedin successfully');
-       
-        setTimeout(() => {
-          setFormSuccess('');
 
-        }, 10000);
+        // setTimeout(() => {
+        //   setFormSuccess('');
+
+        // }, 10000);
         sessionStorage.setItem("user", JSON.stringify(data.user));
         sessionStorage.setItem("token", data.token);
         localStorage.setItem('isUserLoggedIn', 'true');
         window.location.href = '/user/dashboard';
 
-      } else {
-        setLoading(false);
-        setError('Invalid User Role');
-        resetForm();
-        setTimeout(() => {
-          setError('');
+      // } else {
+        // setLoading(false);
+        // setError('Invalid User Role');
+        // resetForm();
+        // setTimeout(() => {
+        //   setError('');
 
-        }, 10000);
-      }
+        // }, 10000);
+      // }
 
     } catch (err) {
       setLoading(false);
       setError(err.message);
-      resetForm();
+      // resetForm();
       setTimeout(() => {
         setError('');
 
@@ -233,12 +234,12 @@ function UserLogin() {
                   <span className=' text-[14px]'>Remember me</span>
 
                 </p>
-
+                <input type="hidden" name="hiddenData" value={'user'} />
                 <button
                   type="submit"
                   className='hover:opacity-[0.8] border border-[#ee403d;] mb-[16px] text-white bg-[#ee403d] py-[8px] px-[15px] w-fit rounded-[2px]'
                 >
-                  Login
+                  {loading ? "Loading..." : "Login"}
                 </button>
                 {error && <div className="text-primary-red mb-[16px] p-[16px] border border-[#ddd] text-[14px] ">{error}</div>}
                 {formSuccess && (
@@ -248,7 +249,7 @@ function UserLogin() {
 
                 )}
                 <div className='justify-center flex gap-2'>
-                  {loading && (<>
+                  {/* {loading && (<>
                     <CircularProgress
                       sx={{
                         color: (theme) =>
@@ -260,7 +261,7 @@ function UserLogin() {
                     />
                     Loading..
                   </>
-                  )}
+                  )} */}
                 </div>
                 <p class="">
                   <a href="#" className='text-[16px] text-[#ee403d] no-underline'>Lost your password?</a>
@@ -316,7 +317,7 @@ function UserLogin() {
                   type="submit"
                   className='hover:opacity-[0.8] border border-[#ee403d] mb-[16px] text-white bg-[#ee403d] py-[8px] px-[15px] w-fit rounded-[2px]'
                 >
-                  Register
+                  {loading ? "Loading..." : "Register"}
                 </button>
 
               </form>
@@ -327,9 +328,9 @@ function UserLogin() {
                 <span className='mb-[16px] p-[16px] border border-[#ddd] text-[14px] flex text-success'>{formSuccess}</span>
 
               )}
-              
+
               <div className='justify-center flex gap-2'>
-                {loading && (<>
+                {/* {loading && (<>
                   <CircularProgress
                     sx={{
                       color: (theme) =>
@@ -341,7 +342,7 @@ function UserLogin() {
                   />
                   Loading..
                 </>
-                )}
+                )} */}
               </div>
             </div>
           </div>

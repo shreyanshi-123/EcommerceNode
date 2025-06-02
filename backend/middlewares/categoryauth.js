@@ -5,7 +5,7 @@ const fs = require('fs')
 
 const router = express.Router()
 
-const uploadDir = path.join(__dirname, '..', 'uploads')
+const uploadDir = path.join(__dirname, '..', 'CategoryFolder')
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir)
 }
@@ -22,7 +22,7 @@ const upload = multer({ storage })
 router.post('/', upload.single('image'), (req, res) => {
   // console.log('api hit')
   if (!req.file) return res.status(400).json({ msg: 'No file uploaded' })
-  res.json({ filePath: `/uploads/${req.file.filename}` })
+  res.json({ filePath: `/CategoryFolder/${req.file.filename}` })
 })
 
 module.exports = router

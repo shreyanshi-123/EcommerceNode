@@ -1,7 +1,7 @@
 const { User, validate } = require('../models/user');
 
 const getSingleUser = async (req, res) => {
-    console.log('getSingleUser')
+    // console.log('getSingleUser')
     try {
         // Check if ID is provided in the request parameters
         // if (!req.params.id) {

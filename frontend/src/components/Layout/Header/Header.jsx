@@ -855,11 +855,7 @@ const Header = () => {
                 <div className="h-[36px] w-[32px] flex justify-center items-center user-btn">
 
 
-                  <a href="/user/dashboard" element={
-                    <ProtectedRoute isLoggedIn={!isUserLoggedIn} redirectPath="/user/login" >
-                      <UserDashboard />
-                    </ProtectedRoute>
-                  } >
+                  <a href={isUserLoggedIn ? '/user/dashboard': '/user/login'}  >
                     <FontAwesomeIcon
                       icon={faUser}
                       className={`text-white  cursor-pointer`}
