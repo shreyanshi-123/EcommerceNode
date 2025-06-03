@@ -3,8 +3,8 @@ const { User } = require('../models/user');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const SignIn = async (req, res) => {
-    const { email, password, hiddenData } = req.body;
-    console.log(req.body.hiddenData)
+    const { email, password, role } = req.body;
+  console.log(req.body.password)
     try {
         // Check if user exists
         const user = await User.findOne({ email });
@@ -25,12 +25,12 @@ const SignIn = async (req, res) => {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
-        if (user.role !== hiddenData) {
+        if (user.role !== role) {
             return res.status(403).json({ message: 'User role is not authorized' });
         }
 
-        console.log(user)
-        console.log('JWT_SECRET_KEY:', process.env.JWT_SECRET_KEY);
+        // console.log(user)
+        // console.log('JWT_SECRET_KEY:', process.env.JWT_SECRET_KEY);
         // Create and sign JWT token
         const token = jwt.sign(
             { userId: user._id, email: user.email },
@@ -50,7 +50,7 @@ const SignIn = async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error during sign-in:', error);
+        // console.error('Error during sign-in:', error);
         res.status(500).json({ message: 'Server error, please try again later' });
     }
 };
