@@ -18,6 +18,7 @@ const addCategory = async (req, res) => {
     let image = '';
     if (req.body && req.body.image) {
       image = `${req.body.image}`;
+      
     }
 
     const newCategory = new Category({
