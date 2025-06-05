@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
+import { useDispatch, useSelector } from "react-redux";
+import { login,createUsers } from "../../Action/UserAction";
 import './user.css'
 
 function UserLogin() {
@@ -13,16 +15,16 @@ function UserLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('login');
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [email, setEmail] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [formSuccess, setFormSuccess] = useState("");
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
 
 
   const handleTabClick = (tab) => (e) => {
@@ -40,127 +42,94 @@ function UserLogin() {
 
 
   // REGISTER NEW USER
-  const registerUser = async (e) => {
+  // const registerUser = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!formData.name || !formData.email || !formData.password) {
+  //     alert('Please fill out all fields');
+  //     return;
+  //   }
+
+  //   const newUserData = { ...formData };
+  //   const result = JSON.stringify(newUserData);
+  //   console.log(result)
+  //   // setLoading(true);
+  //   try {
+  //     // const response = await fetch(`${process.env.REACT_APP_API_URL}/api/register-user`, {
+  //     const response = await fetch(`${baseUrl}/api/register-user`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(newUserData),
+  //     });
+
+  //     if (!response.ok) {
+  //       const errorText = await response.text();
+  //       // setLoading(false);
+  //       // setError(`${errorText}`);
+  //       //  resetForm();
+  //       // setTimeout(() => {
+  //       //   setError('');
+
+  //       // }, 10000);
+
+
+  //     }
+  //     // setLoading(false);
+  //     setFormSuccess('registered successfully');
+  //     // resetForm();
+  //     setTimeout(() => {
+  //       setFormSuccess('');
+
+  //     }, 10000);
+
+  //     const newUser = await response.json();
+
+
+  //     localStorage.setItem('isUserLoggedIn', 'true');
+  //     sessionStorage.setItem('isUserLoggedIn', 'true');
+  //     window.location.href = '/user/dashboard';
+
+  //   } catch (err) {
+  //     // setError(err.message);
+
+  //     // setLoading(false);
+  //     //  resetForm();
+  //     // setTimeout(() => {
+  //     //   setError('');
+
+  //     // }, 10000);
+  //   }
+  // };
+
+const registerUser = async (e) => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.password) {
-      alert('Please fill out all fields');
+      alert('Please fill out all required fields');
       return;
     }
 
-    const newUserData = { ...formData };
-    const result = JSON.stringify(newUserData);
-    console.log(result)
-    setLoading(true);
-    try {
-      // const response = await fetch(`${process.env.REACT_APP_API_URL}/api/register-user`, {
-      const response = await fetch(`${baseUrl}/api/register-user`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newUserData),
-      });
+    console.log(formData)
+    await dispatch(createUsers(formData));
+    
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        setLoading(false);
-        setError(`${errorText}`);
-        //  resetForm();
-        setTimeout(() => {
-          setError('');
-
-        }, 10000);
-
-
-      }
-      setLoading(false);
-      setFormSuccess('registered successfully');
-      // resetForm();
-      setTimeout(() => {
-        setFormSuccess('');
-
-      }, 10000);
-
-      const newUser = await response.json();
-
-
-      localStorage.setItem('isUserLoggedIn', 'true');
-      sessionStorage.setItem('isUserLoggedIn', 'true');
-      window.location.href = '/user/dashboard';
-
-    } catch (err) {
-      setError(err.message);
-
-      setLoading(false);
-      //  resetForm();
-      setTimeout(() => {
-        setError('');
-
-      }, 10000);
-    }
   };
 
   // Login functionality
+  const { loading, error, isLoggedIn } = useSelector(state => state.loginAdmin);
+  const storedValue = localStorage.getItem('user');
 
-  const loginUser = async (e) => {
-    e.preventDefault(); // Prevent the default form submission (page reload)
-    const formData = new FormData(e.target);
-    const hiddenData = formData.get('hiddenData');
-    const signInData = { email, password, hiddenData };
-    console.log(signInData);
-    setError("");
-    setLoading(true);
-    try {
-      // const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
-      const response = await fetch(`${baseUrl}/api/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(signInData),
-      });
-
-       if (!response.ok) {
-      setLoading(false);
-      if (response.status === 403) {
-        throw new Error("User role is not authorized");
-      } else {
-        throw new Error("Invalid credentials or user not found");
-      }
-    }
-
-      const data = await response.json();
-
-      // if (data.user.role === 'user') {
-        setLoading(false);
-        setFormSuccess('Loggedin successfully');
-
-        // setTimeout(() => {
-        //   setFormSuccess('');
-
-        // }, 10000);
-        sessionStorage.setItem("user", JSON.stringify(data.user));
-        sessionStorage.setItem("token", data.token);
-        localStorage.setItem('isUserLoggedIn', 'true');
-        window.location.href = '/user/dashboard';
-
-      // } else {
-        // setLoading(false);
-        // setError('Invalid User Role');
-        // resetForm();
-        // setTimeout(() => {
-        //   setError('');
-
-        // }, 10000);
-      // }
-
-    } catch (err) {
-      setLoading(false);
-      setError(err.message);
-      // resetForm();
-      setTimeout(() => {
-        setError('');
-
-      }, 10000);
-    }
+  const loginUser = async (event) => {
+    event.preventDefault();
+    dispatch(login(email, password, 'user'));
   };
+
+  useEffect(() => {
+    if (storedValue) {
+      setFormSuccess("Login successful. Redirecting...");
+      navigate('/dashboard')
+    }
+  }, [storedValue, navigate]);
 
   const resetForm = () => {
     setUsername("")
@@ -171,7 +140,7 @@ function UserLogin() {
 
 
   return (
-    <div className='mt-[40px] lg:mt-[200px] mb-[80px] max-w-7xl mx-auto  flex'>
+    <div className='mt-[40px] lg:my-[80px] max-w-7xl mx-auto  flex'>
       <div className='px-[15px] mx-auto max-w-[560px] w-full'>
         <div className='flex flex-col  '>
           <ul className="login-page-tab flex mb-[28px] justify-center">
@@ -234,7 +203,7 @@ function UserLogin() {
                   <span className=' text-[14px]'>Remember me</span>
 
                 </p>
-                <input type="hidden" name="hiddenData" value={'user'} />
+                <input type="hidden" name="role" value="user" />
                 <button
                   type="submit"
                   className='hover:opacity-[0.8] border border-[#ee403d;] mb-[16px] text-white bg-[#ee403d] py-[8px] px-[15px] w-fit rounded-[2px]'

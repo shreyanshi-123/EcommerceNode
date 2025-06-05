@@ -12,6 +12,7 @@ import UserLogin from './components/User/UserLogin';
 
 
 
+
 function App() {
  const [isUserLoggedIn, setIsUserLoggedIn] = useState(
     localStorage.getItem('isUserLoggedIn') === 'true'
@@ -44,14 +45,14 @@ function App() {
 
 
             {/* User Routes */}
-            <Route path="/user/login" element={<UserLogin />} />
+            <Route path="/login" element={<UserLogin />} />
             
             <Route
-              path="/user/dashboard"
+              path="/dashboard"
               element={
                 <ProtectedRoute
-                  isLoggedIn={isUserLoggedIn}
-                  redirectPath="/user/login"
+                  // isLoggedIn={isUserLoggedIn}
+                  // redirectPath="/user/login"
                 >
                   <UserDashboard />
                 </ProtectedRoute>

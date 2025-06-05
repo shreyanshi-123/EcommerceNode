@@ -1,41 +1,17 @@
-// import React, { useState } from 'react';
 import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Accordion from 'react-bootstrap/Accordion';
-import CategoryMenu from './category';
-import UserDashboard from '../../User/UserDashboard';
-import ProtectedRoute from '../../User/ProtectedRoute';
-
-import {
-  // faHeart,
-  // faShoppingCart,
-  faAngleDown,
-  faBars,
-  faTimes,
-  // faUser,
-  faSearch,
-  faChartBar,
-  faBarChart,
-  faShoppingBag
-
-} from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from "react-redux";
+import { getcategory } from "../../../Action/CategoryAction";
+import { faAngleDown, faBars, faTimes, faSearch, faChartBar, faBarChart, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import { faBagShopping, faCheck } from '@fortawesome/free-solid-svg-icons';
-
-import './Header.css'
 import { faHeart, faUser, fas } from '@fortawesome/free-regular-svg-icons';
-
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { NavLink } from "react-router-dom";
-
+import './Header.css'
 
 const Logo = `${process.env.REACT_APP_API_URL}/assets/images/logo-white.webp`;
-const Category1 = `${process.env.REACT_APP_API_URL}/assets/images/dropdowns/accessories-women-cat.jpg`;
-const Category2 = `${process.env.REACT_APP_API_URL}/assets/images/dropdowns/accessories-men-cat.jpg`;
-const Category3 = `${process.env.REACT_APP_API_URL}/assets/images/dropdowns/shoes-cat.jpg`;
-const Category4 = `${process.env.REACT_APP_API_URL}/assets/images/dropdowns/bag-cat.jpg`;
-const Category5 = `${process.env.REACT_APP_API_URL}/assets/images/dropdowns/glasses-cat.jpg`;
-const Category6 = `${process.env.REACT_APP_API_URL}/assets/images/dropdowns/jewelry-cat.jpg`;
 const MenMegaMenu = `${process.env.REACT_APP_API_URL}/assets/images/dropdowns/megamenu-1.jpg`;
 const MenMegaMenu1 = `${process.env.REACT_APP_API_URL}/assets/images/dropdowns/megamenu-3.jpg`;
 const MenMegaMenu2 = `${process.env.REACT_APP_API_URL}/assets/images/dropdowns/megamenu-4.jpg`;
@@ -224,44 +200,6 @@ const row222 = [
 
   }
 ]
-const category = [
-  {
-    id: 1,
-    item: 'Women',
-    image: Category1
-
-  },
-  {
-    id: 2,
-    item: 'Men',
-    image: Category2
-
-  },
-  {
-    id: 3,
-    item: 'Shoes',
-    image: Category3
-
-  },
-  {
-    id: 4,
-    item: 'Bags',
-    image: Category4
-
-  },
-  {
-    id: 5,
-    item: 'Glasses',
-    image: Category5
-
-  },
-  {
-    id: 6,
-    item: 'Jwellry',
-    image: Category6
-
-  }
-]
 
 const men = [
   { id: 1, item: 'Jackets & Coats' },
@@ -277,17 +215,6 @@ const men = [
   { id: 11, item: 'Trousers' },
   { id: 12, item: 'Underwear' }
 ]
-
-
-
-
-
-
-
-
-
-
-
 const Women = [
   { id: 1, item: 'Dresses' },
   { id: 2, item: 'Jackets & Coats' },
@@ -307,61 +234,30 @@ const Header = () => {
 
   // const [menuOpen, setMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);  // This controls the menu's visibility
+  const [menuOpen, setMenuOpen] = useState(false);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  // category fetch from database
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  const baseUrl = process.env.REACT_APP_API_URL;
+
+  const baseUrl = window.location.hostname === 'localhost'
+    ? 'http://localhost:5000'
+    : process.env.REACT_APP_API_URL;
+
   const location = useLocation();
+  const dispatch = useDispatch();
+
   const pathname = location.pathname;
   const locationValue = pathname.split("/");
-  // Optional: Map display names to image file names
-  const imageFileNames = {
-    Women: 'accessories-women-cat.jpg',
-    Men: 'accessories-men-cat.jpg',
-    Shoes: 'shoes-cat.jpg',
-    Bags: 'bag-cat.jpg',
-    Glasses: 'glasses-cat.jpg',
-    jewellery: 'jewelry-cat.jpg',
-  };
 
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(
-    localStorage.getItem('isUserLoggedIn') === 'true'
-  );
+
+  const { categories = [], loading, error } = useSelector(state => state.categoryList);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/get-category`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        setCategories(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    dispatch(getcategory());
 
-    fetchData();
-
-
-  }, []);
-
-  //    if (loading) return <div>Loading...</div>;
-  //    if (error) return <div>Error: {error}</div>;
-
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error}</div>;
-
-
-
+  }, [dispatch]);
 
 
   return (
@@ -481,16 +377,9 @@ const Header = () => {
                           <Accordion.Body>
 
                             {categories.map((category, index) => {
-                              const fileName = imageFileNames[category.category];
-                              const imageUrl = `${baseUrl}/assets/images/dropdowns/${fileName}`;
-
                               return (
-
                                 <li key={index}>
-                                  <a href="#" className='text-black hover:text-primary-red'>    <li className='text-black text-[15px] py-[4px] leading-[1.5]'>{category.category}</li></a>
-
-
-
+                                  <a href="#" className='text-black hover:text-primary-red'>    <li className='text-black text-[15px] py-[4px] leading-[1.5] capitalize'>{category.category}</li></a>
                                 </li>
                               );
                             })}
@@ -639,7 +528,30 @@ const Header = () => {
                         {/* ============================================================= */}
 
                         <ul className="py-[50px] text-sm font-medium flex  gap-[20px] xl:gap-[30px] justify-center items-center text-center">
-                          <CategoryMenu />
+                          {categories.map((category, index) => {
+                            const imageUrl = `${baseUrl}${category.image}`;
+
+                            return (
+
+                              <li key={index}>
+                                <li key={index} className='flex flex-col'>
+                                  <div className="rounded-[50%] h-[150px] 5xl:h-[166px] xl:h-[179.156px] w-[150px] 5xl:w-[166px] xl:w-[179.156px] bg-[#f3f3f3] overflow-hidden rounded-dropdown">
+                                    <a href="" >  <LazyLoadImage
+                                      src={imageUrl}
+                                      alt={category.category}
+                                      className="category w-full h-full object-contain"
+                                    />
+
+                                    </a>
+                                  </div>
+                                  <a href="#" className="pt-[20px] text-[17px] leading-[1.4] hover:text-primary-red hover:no-underline no-underline capitalize">{category.category}</a>
+
+                                </li>
+
+
+                              </li>
+                            );
+                          })}
 
                         </ul>
                       </div>
@@ -855,68 +767,68 @@ const Header = () => {
                 <div className="h-[36px] w-[32px] flex justify-center items-center user-btn">
 
 
-                  <a href={isUserLoggedIn ? '/user/dashboard': '/user/login'}  >
+                  <a href={'/login'}  >
                     <FontAwesomeIcon
                       icon={faUser}
                       className={`text-white  cursor-pointer`}
                       size="lg"
                     />
                   </a></div>
-                  {/* <a href="/user/login"> </a></div> */}
-                  <div className="h-[36px] w-[32px]  flex justify-center items-center ml-2.5 search-btn">
-                    <FontAwesomeIcon
+                {/* <a href="/user/login"> </a></div> */}
+                <div className="h-[36px] w-[32px]  flex justify-center items-center ml-2.5 search-btn">
+                  <FontAwesomeIcon
 
-                      icon={faSearch}
-                      className={`text-white  cursor-pointer`}
-                      size="lg"
-                    /></div>
-                  <div className="h-[36px] w-[32px]  flex justify-center items-center ml-2.5 heart-btn relative" >
-                    <FontAwesomeIcon
+                    icon={faSearch}
+                    className={`text-white  cursor-pointer`}
+                    size="lg"
+                  /></div>
+                <div className="h-[36px] w-[32px]  flex justify-center items-center ml-2.5 heart-btn relative" >
+                  <FontAwesomeIcon
 
-                      icon={faHeart}
-                      className={`text-white  cursor-pointer`}
-                      size="lg"
-                    />
-                    <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[-2px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
+                    icon={faHeart}
+                    className={`text-white  cursor-pointer`}
+                    size="lg"
+                  />
+                  <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[-2px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
 
-                  </div>
-                  <div className='header-button'>
-                    <a href="#" className=''>
-                      <div className='flex  ml-2.5 cart-btn ' >
-                        <span className='text-black lg:text-white text-[13px] CartAmount'>$0.00</span>
-                        <div className="relative h-[36px] w-[32px] justify-center flex items-center">
-                          <FontAwesomeIcon
+                </div>
+                <div className='header-button'>
+                  <a href="#" className=''>
+                    <div className='flex  ml-2.5 cart-btn ' >
+                      <span className='text-black lg:text-white text-[13px] CartAmount'>$0.00</span>
+                      <div className="relative h-[36px] w-[32px] justify-center flex items-center">
+                        <FontAwesomeIcon
 
-                            icon={faShoppingBag}
-                            className={`text-white  cursor-pointer`}
-                            size="lg"
-                          />
-                          <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[0px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
-                        </div>
+                          icon={faShoppingBag}
+                          className={`text-white  cursor-pointer`}
+                          size="lg"
+                        />
+                        <span class="count klbwl-wishlist-count absolute bg-primary-red text-white font-semibold text-[10px] rounded-[50%] top-0 right-[0px] min-h-[15px] min-w-[17px] py-[2px] flex items-center justify-center">0</span>
                       </div>
-                    </a>
-                    <div class="cart-dropdown ">
-                      <div class="cart-dropdown-wrapper">
-                        <div class="fl-mini-cart-content">
+                    </div>
+                  </a>
+                  <div class="cart-dropdown ">
+                    <div class="cart-dropdown-wrapper">
+                      <div class="fl-mini-cart-content">
 
 
-                          <div class="cart-empty">
-                            <div class="empty-icon">
-                              <img src={ShoppingBag} alt="" />
-                            </div>
-                            <div class="empty-text">No products in the cart.</div>
+                        <div class="cart-empty">
+                          <div class="empty-icon">
+                            <img src={ShoppingBag} alt="" />
                           </div>
-
+                          <div class="empty-text">No products in the cart.</div>
                         </div>
+
                       </div>
                     </div>
                   </div>
-
                 </div>
+
               </div>
             </div>
           </div>
         </div>
+      </div>
       {/* </div> */}
 
     </header >

@@ -14,3 +14,10 @@
 .login-form{
     height: fit-content;
 }
+
+.other-Page .navigation {
+    position: relative!important;
+}
+.logout:hover{
+    color: #000!important;
+}

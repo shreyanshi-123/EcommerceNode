@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const SignIn = async (req, res) => {
     const { email, password, role } = req.body;
-  console.log(req.body.password)
+//   console.log(req.body.password)
     try {
         // Check if user exists
         const user = await User.findOne({ email });
