@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
 import { login, createUsers } from "../../Action/UserAction";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import './user.css'
 
 function UserLogin() {
@@ -23,6 +24,7 @@ function UserLogin() {
   const [email, setEmail] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [formSuccess, setFormSuccess] = useState("");
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -237,7 +239,7 @@ function UserLogin() {
                   className='hover:opacity-[0.8] border border-[#ee403d;] mb-[16px] text-white bg-[#ee403d] py-[8px] px-[15px] w-fit rounded-[2px]'
                   style={isDisabled ? Styles.disabled : Styles.notdisabled}
                 >
-                  {loading ? "Loading..." : "Login"}
+                  {loading ? "Processing..." : "Login"}
                 </button>
                 {error && <div className="text-primary-red mb-[16px] p-[16px] border border-[#ddd] text-[14px] ">{error}</div>}
                 {formSuccess && (
@@ -315,8 +317,9 @@ function UserLogin() {
                   disabled={isDisabled}
                   type="submit"
                   className='hover:opacity-[0.8] border border-[#ee403d] mb-[16px] text-white bg-[#ee403d] py-[8px] px-[15px] w-fit rounded-[2px]'
+                   style={isDisabled ? Styles.disabled : Styles.notdisabled}
                 >
-                  {loading ? "Loading..." : "Register"}
+                  {loading ? "Processing..." : "Register"}
                 </button>
 
               </form>
@@ -343,7 +346,10 @@ function UserLogin() {
                 </>
                 )} */}
               </div>
+
+              
             </div>
+             <ToastContainer position="top-center" theme="colored" autoClose={3000} />
           </div>
         </div>
       </div>
