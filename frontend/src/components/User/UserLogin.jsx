@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
-import { login,createUsers } from "../../Action/UserAction";
+import { login, createUsers } from "../../Action/UserAction";
 import './user.css'
 
 function UserLogin() {
@@ -101,17 +101,20 @@ function UserLogin() {
   //   }
   // };
 
-const registerUser = async (e) => {
+  const registerUser = async (e) => {
     e.preventDefault();
-
+    setIsDisabled(true);
     if (!formData.name || !formData.email || !formData.password) {
       alert('Please fill out all required fields');
       return;
     }
-
-    console.log(formData)
-    await dispatch(createUsers(formData));
-    
+    try {
+      console.log(formData)
+      await dispatch(createUsers(formData));
+      setIsDisabled(false);
+    } catch (error) {
+      setIsDisabled(false);
+    }
 
   };
 
@@ -121,13 +124,26 @@ const registerUser = async (e) => {
 
   const loginUser = async (event) => {
     event.preventDefault();
-    dispatch(login(email, password, 'user'));
+    setIsDisabled(true);
+    try {
+      await dispatch(login(email, password, 'user'));
+     
+      setIsDisabled(false);
+    } catch (error) {
+      // setError(error.response?.data?.message || error.message || 'Failed to add User');
+      setIsDisabled(false);
+    }
   };
+
+
 
   useEffect(() => {
     if (storedValue) {
       setFormSuccess("Login successful. Redirecting...");
       navigate('/dashboard')
+    } else {
+
+      setIsDisabled(false)
     }
   }, [storedValue, navigate]);
 
@@ -137,7 +153,18 @@ const registerUser = async (e) => {
     setEmail('');
 
   }
+  const Styles = {
+    disabled: {
+      backgroundColor: 'gray',
+      color: 'white',
+      cursor: 'not-allowed',
+      border: '0px'
 
+    },
+    notdisabled: {
+      cursor: 'pointer'
+    }
+  }
 
   return (
     <div className='mt-[40px] lg:my-[80px] max-w-7xl mx-auto  flex'>
@@ -205,8 +232,10 @@ const registerUser = async (e) => {
                 </p>
                 <input type="hidden" name="role" value="user" />
                 <button
+                  disabled={isDisabled}
                   type="submit"
                   className='hover:opacity-[0.8] border border-[#ee403d;] mb-[16px] text-white bg-[#ee403d] py-[8px] px-[15px] w-fit rounded-[2px]'
+                  style={isDisabled ? Styles.disabled : Styles.notdisabled}
                 >
                   {loading ? "Loading..." : "Login"}
                 </button>
@@ -283,6 +312,7 @@ const registerUser = async (e) => {
                 </p>
                 <p className='text-[13px] mb-[5px]'>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <a className='hover:text-[#0a58ca] text-primary-red cursor-pointer'>privacy policy.</a></p>
                 <button
+                  disabled={isDisabled}
                   type="submit"
                   className='hover:opacity-[0.8] border border-[#ee403d] mb-[16px] text-white bg-[#ee403d] py-[8px] px-[15px] w-fit rounded-[2px]'
                 >
