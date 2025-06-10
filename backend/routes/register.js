@@ -9,12 +9,17 @@ const DeleteUser = require('../UsersAPI/DeleteUser');
 const EditUser = require('../UsersAPI/editUser');
 const AddCategory = require('../CategoryAPI/AddCategory');
 
+const productUpload = require('../middlewares/Productsauth.js');
+
 const updateCategory = require('../CategoryAPI/updateCategory');
 const GetSingleCategory = require('../CategoryAPI/GetsingleCategory');
 const deleteCategory = require('../CategoryAPI/RemoveCategory');
 
-
-
+const AddProduct = require('../ProductAPI/addProduct');
+const GetProduct = require('../ProductAPI/getAllProduct');
+const DeleteProduct = require('../ProductAPI/DeleteProduct.js');
+const GetProductById = require('../ProductAPI/getProduct.js');
+const EditProduct = require('../ProductAPI/updateProduct.js');
 
 
 // category
@@ -24,8 +29,12 @@ router.post('/addCategory', AddCategory);
 router.get('/get-category', GetCategory);
 router.post('/update-category/:id', updateCategory);
 
-
-
+// Products
+router.post('/products', productUpload.array('image'), AddProduct);
+router.get('/productslist', GetProduct);
+router.delete('/deleteProduct/:id', DeleteProduct);
+router.get('/get-product/:id', GetProductById);
+router.post('/editProduct/:id', EditProduct);
 
 // users
 router.get('/get-user/:id', GetUser);

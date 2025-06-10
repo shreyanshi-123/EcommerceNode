@@ -6,11 +6,7 @@ const express = require('express');
 
 // POST /api/admin/users with image upload
 const allUser = async (req, res) => {
-//    console.log('File info:', req.file);  
-//   if (!req.file) {
-//     return res.status(400).send('didnt get file');
-//   }
-    // Validate user input (without image)
+
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 

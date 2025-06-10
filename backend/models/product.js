@@ -1,33 +1,41 @@
+const { array } = require('joi');
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
-    required: [true, 'Product name is required'],
-    trim: true,
+    required: true,
+
   },
-  image: {
+  shortDescription: {
     type: String,
-    required: [true, 'Product image URL is required'],
+    required: true,
   },
-  category: {
+  LongDescription: {
     type: String,
-    required: [true, 'Product category is required'],
+    required: true,
   },
   stock: {
     type: Number,
-    required: [true, 'Stock is required'],
+    required: true,
     min: [0, 'Stock cannot be negative'],
   },
   sellingPrice: {
     type: Number,
-    required: [true, 'Selling price is required'],
+    required: true,
     min: [0, 'Price cannot be negative'],
   },
-  review: {
-    type: [String],
-    default: [],
+  discountPrice: {
+    type: Number,
+    required: true,
+    min: [0, 'Price cannot be negative'],
   },
+  category: {
+    type: String,
+    enum: ['Men', 'Women', 'Bags', 'Shoes', 'Jwellery', 'Glasses']
+  },
+  additionalInfo: String,
+  images: [String],
 }, {
   timestamps: true,
 });

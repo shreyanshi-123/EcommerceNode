@@ -22,10 +22,12 @@ const path = require('path');
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use('/CategoryFolder', express.static(path.join(__dirname, 'CategoryFolder')))
+app.use('/ProductFolder', express.static(path.join(__dirname, 'ProductFolder')))
 
 const categoryUpload = require('./middlewares/categoryauth.js');
 const uploadRoutes = require('./routes/upload.js')
 const Routes = require('./routes/register.js');
+
 
 
 app.use('/api/CategoryImage', categoryUpload)
