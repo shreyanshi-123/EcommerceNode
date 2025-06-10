@@ -1,23 +1,36 @@
 const Product = require('../models/product');
 
-const updateProduct = async (req, res) => {
+const updateproduct = async (req, res) => {
   try {
-     const { id } = req.params;
+    const { id } = req.params;
     const { product } = req.body;
-console.log('product',product)
-    const updatedProduct = await Product.findById(id);
 
-
-    if (!updatedProduct) {
-      return res.status(404).json({ error: 'Product not found' });
+    if (!product ) {
+      return res.status(400).json({ message: 'product is required.' });
     }
-updatedProduct = product
 
-console.log('updatedProduct',updatedProduct)
-    res.status(200).json({ message: 'Product updated', product: updatedProduct });
+    const gotproduct = await Product.findById(id);
+    if (!gotproduct) {
+      return res.status(404).json({ message: 'product not found.' });
+    }
+
+    // Update the fields of the product document
+    gotproduct.product = product;
+
+    // Check if image is provided and update it
+    if (req.body.image) {
+      gotproduct.images = `${req.body.image}`;
+    } 
+    console.log(gotproduct)
+
+    const updated = await gotproduct.save();
+
+   
+    res.status(200).json(updated);
   } catch (err) {
-    res.status(500).json({ error: 'Server error' });
+    console.error('Update error:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-module.exports = updateProduct;
+module.exports = updateproduct;
