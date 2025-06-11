@@ -3,34 +3,55 @@ const Product = require('../models/product');
 const updateproduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { product } = req.body;
-
-    if (!product ) {
-      return res.status(400).json({ message: 'product is required.' });
+    const product = { ...req.body };  // clone req.body to avoid mutations
+    const sellingPrice = Number(product.sellingPrice);
+    const discountPrice = Number(product.discountPrice);
+    if (isNaN(sellingPrice) || isNaN(discountPrice)) {
+      return res.status(400).json({ error: 'Invalid price values' });
+    }
+    if (sellingPrice < discountPrice) {
+      return res.status(400).json({ error: 'Discounted price cannot be more than selling price' });
     }
 
-    const gotproduct = await Product.findById(id);
-    if (!gotproduct) {
-      return res.status(404).json({ message: 'product not found.' });
+    // multer puts files in req.files if any
+    if (req.files && req.files.length > 0) {
+      const images = req.files.map(
+        (file) => `http://localhost:5000/ProductFolder/${file.filename}`
+      );
+      product.images = images; // update product.images with uploaded files URLs
     }
 
-    // Update the fields of the product document
-    gotproduct.product = product;
+    // additionalInfo usually comes as JSON string, so parse it if needed
+    if (product.additionalInfo && typeof product.additionalInfo === 'string') {
+      try {
+        product.additionalInfo = JSON.parse(product.additionalInfo);
+      } catch (err) {
+        // if parsing fails, keep it as string or handle error
+        console.warn('Failed to parse additionalInfo JSON:', err);
+      }
+    }
 
-    // Check if image is provided and update it
-    if (req.body.image) {
-      gotproduct.images = `${req.body.image}`;
-    } 
-    console.log(gotproduct)
+    // if you want to store it as string, stringify it here (based on your schema)
+    if (Array.isArray(product.additionalInfo)) {
+      product.additionalInfo = JSON.stringify(product.additionalInfo);
+    }
 
-    const updated = await gotproduct.save();
+    // Now update the product document in DB
+    const updatedProduct = await Product.findByIdAndUpdate(id, product, {
+      new: true,
+      runValidators: true,
+    });
 
-   
-    res.status(200).json(updated);
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json(updatedProduct);
   } catch (err) {
     console.error('Update error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 module.exports = updateproduct;

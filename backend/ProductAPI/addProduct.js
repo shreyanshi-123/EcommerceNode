@@ -18,9 +18,9 @@ const addProduct = async (req, res) => {
     // }
 
   if (req.body.sellingPrice < req.body.discountPrice ) {
-      return res.status(400).json({ msg: 'Discounted price cannot be more than selling price' });
+      return res.status(400).json({ error: 'Discounted price cannot be more than selling price' });
     }
-    const images = req.files.map(file => `http://localhost:5000/ProductFolder/${file.filename}`);
+    const images = req.files.map(file => `/ProductFolder/${file.filename}`);
 console.log(additionalInfo)
 
     

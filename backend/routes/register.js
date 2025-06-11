@@ -30,11 +30,11 @@ router.get('/get-category', GetCategory);
 router.post('/update-category/:id', updateCategory);
 
 // Products
-router.post('/products', productUpload.array('image'), AddProduct);
+router.post('/products', productUpload.array('images'), AddProduct);
 router.get('/productslist', GetProduct);
 router.delete('/deleteProduct/:id', DeleteProduct);
 router.get('/get-product/:id', GetProductById);
-router.post('/editProduct/:id', EditProduct);
+router.post('/editProduct/:id', productUpload.array('images'), EditProduct);
 
 // users
 router.get('/get-user/:id', GetUser);
