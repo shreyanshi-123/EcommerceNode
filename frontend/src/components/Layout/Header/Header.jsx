@@ -751,7 +751,7 @@ const Header = () => {
 
 
               {/* Center: Logo */}
-              <div className="absolute left-[47%] sm:left-[50.5%]  lg:left-[54%] transform -translate-x-1/2 z-10">
+              <div className="absolute left-[50%] sm:left-[50%]  lg:left-[50%] transform -translate-x-1/2 z-10">
                 <NavLink to="/" className="block w-auto">
                   <LazyLoadImage
                     src={Logo}

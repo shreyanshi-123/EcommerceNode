@@ -23,7 +23,7 @@ import {
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL
 } from "../Constants/UserConstants";
-
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import axios from "axios";
 
 // Determine base URL based on environment
@@ -122,7 +122,7 @@ export const deleteUser = (id) => async (dispatch) => {
   }
 };
 
-// Admin Login
+// USER Login
 export const login = (email, password, role) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
@@ -138,7 +138,7 @@ export const login = (email, password, role) => async (dispatch) => {
     // Save session info
     localStorage.setItem('user', JSON.stringify(data.user));
     localStorage.setItem('token', data.token);
-        
+        toast.success('User logged in')
     // Redirect
     window.location.href = '/dashboard';
   } catch (error) {
@@ -146,6 +146,7 @@ export const login = (email, password, role) => async (dispatch) => {
       type: LOGIN_FAILURE,
       payload: error.response?.data?.message || error.message,
     });
+     toast.error(error.response?.data?.message || error.message)
   }
 };
 

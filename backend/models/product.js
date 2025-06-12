@@ -16,10 +16,16 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   stock: {
-    type: Number,
-    required: true,
-    min: [0, 'Stock cannot be negative'],
-  },
+  type: mongoose.Schema.Types.Mixed, // or [Number, String] but Mixed is easier
+  required: false,
+},
+
+  // stock: {
+  //   type: Number,
+  //   required: false,
+  //   // default: ['in stock'],
+  //   min: [0, 'Stock cannot be negative'],
+  // },
   sellingPrice: {
     type: Number,
     required: true,
@@ -27,7 +33,7 @@ const productSchema = new mongoose.Schema({
   },
   discountPrice: {
     type: Number,
-    required: true,
+    required: false,
     min: [0, 'Price cannot be negative'],
   },
   category: {

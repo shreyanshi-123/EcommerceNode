@@ -129,9 +129,10 @@ function UserLogin() {
     setIsDisabled(true);
     try {
       await dispatch(login(email, password, 'user'));
-     
+    //  toast.success('logged in')
       setIsDisabled(false);
     } catch (error) {
+      toast.error(error)
       // setError(error.response?.data?.message || error.message || 'Failed to add User');
       setIsDisabled(false);
     }
@@ -142,6 +143,7 @@ function UserLogin() {
   useEffect(() => {
     if (storedValue) {
       setFormSuccess("Login successful. Redirecting...");
+      toast.success('User loggedin successfully')
       navigate('/dashboard')
     } else {
 

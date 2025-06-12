@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Action/UserAction";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import './user.css'
 
 function UserDashboard() {
@@ -32,6 +33,7 @@ function UserDashboard() {
 
   const handleLogout = () => {
     dispatch(logout());
+    toast.success('Logged Out Successfully')
     navigate('/login');
   }
 
@@ -50,6 +52,7 @@ function UserDashboard() {
         >
           Logout
         </button>
+        <ToastContainer position="top-center" theme="colored" autoClose={3000} />
       </div>
     </div>
   );

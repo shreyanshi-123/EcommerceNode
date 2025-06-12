@@ -96,7 +96,7 @@ const BannerSlider = () => {
             />
             <div className="absolute top-0 left-0 w-full h-full bg-black/25 z-10"></div>
             <div className="relative z-20 flex items-center justify-center h-full w-full text-center px-4">
-              <div className="text-white max-w-7xxl mx-auto px-[0px] sm:px-[15px]">
+              <div className="text-white max-w-7xxl mx-auto lg:mt-[123px] px-[0px] sm:px-[15px]">
                 <h4 className="text-white text-[10px] md:text-[12px] font-semibold tracking-[1px] uppercase">{el.subtitle}</h4>
                 <h1 className="text-[34px] sm:text-[50px] md:text-[66px] font-[500] sm:font-[300]  lg:text-[77px] xl:text-[98px] lg:font-semibold leading-[1.2] uppercase">{el.title}</h1>
                 <p className="text-[13px] sm:text-lg md:text-[16px] opacity-[0.6]">{el.text}</p>

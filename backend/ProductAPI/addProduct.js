@@ -5,25 +5,26 @@ const addProduct = async (req, res) => {
 
   try {
     const { title, shortDescription, LongDescription, stock, sellingPrice, discountPrice, category, image, additionalInfo } = req.body;
-// console.log(req.body.image)
-    if (!title || !shortDescription || !LongDescription || stock == null || sellingPrice == null )  {
+
+    if (!title || !shortDescription || !LongDescription || stock == null  || sellingPrice == null )  {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
     if (!additionalInfo) {
-      return res.status(400).json({ msg: 'No additional info ' });
+      return res.status(400).json({ error: 'No additional info ' });
     }
-    //  if (!req.files || req.files.length ) {
-    //   return res.status(400).json({ msg: 'Upload image of product' });
-    // }
+    
 
-  if (req.body.sellingPrice < req.body.discountPrice ) {
+  if (req.body.discountPrice && req.body.sellingPrice < req.body.discountPrice ) {
       return res.status(400).json({ error: 'Discounted price cannot be more than selling price' });
     }
     const images = req.files.map(file => `/ProductFolder/${file.filename}`);
-console.log(additionalInfo)
+// console.log(additionalInfo)
+// console.log(images)
+    if (!images || images.length === 0) {
+  return res.status(400).json({ error: 'Upload image of product' });
+}
 
-    
     const product = new Product({
       title,
       shortDescription,
@@ -35,7 +36,7 @@ console.log(additionalInfo)
       images:images,
       additionalInfo:additionalInfo
     });
-  console.log(product)
+  // console.log(product)
     await product.save();
 
     res.status(201).json({ message: 'Product added successfully', product });
