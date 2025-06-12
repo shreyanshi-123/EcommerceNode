@@ -112,7 +112,7 @@ const ProductCard = ({ product }) => {
         <div className="product-badges"> {product.discountPercent && (
           <div className="product-badges absolute left-[10px] top-[10px] bg-white z-30">
             <span className={`badge style-1 trending font-medium text-[#47b486]`}>
-              {product.discountPercent}
+              {product.discountPercent}%
             </span>
           </div>
         )}</div>
