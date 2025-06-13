@@ -1,4 +1,4 @@
-const { array } = require('joi');
+const { array, boolean } = require('joi');
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
@@ -18,6 +18,7 @@ const productSchema = new mongoose.Schema({
   stock: {
   type: mongoose.Schema.Types.Mixed, // or [Number, String] but Mixed is easier
   required: false,
+   min: [0, 'Stock cannot be negative']
 },
 
   // stock: {
@@ -40,6 +41,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     enum: ['Men', 'Women', 'Bags', 'Shoes', 'Jwellery', 'Glasses']
   },
+  featuredProduct: {
+    type: Boolean,
+  },
+
   additionalInfo: String,
   images: [String],
 }, {

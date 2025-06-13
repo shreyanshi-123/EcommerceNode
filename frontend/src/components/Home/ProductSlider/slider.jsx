@@ -82,6 +82,7 @@ const HoverProductSlider = () => {
               discountPercent: product.discountPrice ? ((1 - (product.discountPrice / product.sellingPrice)) * 100).toFixed(0) : null,
               discountPrice: product.discountPrice,
               Review: "2 reviews",
+              featured: product.featuredProduct,
               hoverImages: hoverImages.length ? hoverImages : [baseUrl + product.images[0]]
             };
 
@@ -89,9 +90,6 @@ const HoverProductSlider = () => {
           })}
           
         </Slider>
-
-
-
 
 
 
@@ -109,13 +107,17 @@ const ProductCard = ({ product }) => {
 
     <div className="product-card ">
       <div className="thumbnail-wrapper mb-[20px]">
-        <div className="product-badges"> {product.discountPercent && (
+        <div className="product-badges">
           <div className="product-badges absolute left-[10px] top-[10px] bg-white z-30">
+             {product.discountPercent && (
             <span className={`badge style-1 trending font-medium text-[#47b486]`}>
               {product.discountPercent}%
-            </span>
+            </span> )}
+            
+            <span class="badge text-[#75767c] font-medium uppercase">{!product.discountPercent && product.featured === true ? 'Trending' : '' }</span>
+           
           </div>
-        )}</div>
+       </div>
 
         <div className="product-buttons">
           <a href="#" className="wishlist hover:bg-[#ee403d] bg-white rounded-[50%] h-[34px] w-[34px] p-[4px] flex items-center justify-center  hover:text-[white]"><img src={Heart} alt="" className='w-[15px] h-[15px] shop-icon' /></a>

@@ -2,6 +2,8 @@ import './shopnow.css'
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faLongArrowRight, faStar } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from '../../../Action/ProductAction'
 
 const background = `${process.env.REACT_APP_API_URL}/assets/images/Products/background.jpg`;
 const cart = `${process.env.REACT_APP_API_URL}/assets/images/ShopNow/shopping-cart.png`;
@@ -13,10 +15,22 @@ const Product3a = `${process.env.REACT_APP_API_URL}/assets/images/ShopNow/produc
 const Product3b = `${process.env.REACT_APP_API_URL}/assets/images/ShopNow/product3b.jpg`;
 
 const ShopNow = () => {
+    const baseUrl = window.location.hostname === 'localhost'
+        ? 'http://localhost:5000'
+        : process.env.REACT_APP_API_URL;
+
+    const dispatch = useDispatch();
+    const { products = [], loading, error } = useSelector(state => state.productList);
+
+    useEffect(() => {
+        dispatch(getProducts());
+    }, [dispatch]);
+
+
     const [activeProduct, setActiveProduct] = useState(null);
     const style = {
         background: `url(${background})`,
-        backgroundSize: '', // Optional: Ensures the background covers the container
+        backgroundSize: '',
         height: '530px',
         backgroundPosition: '50% 82%'
     };
@@ -35,110 +49,130 @@ const ShopNow = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full sm:w-3/5 relative h-full">
-                            {/* first product */}
-                            <div className="firstprod">
-                                {/* <div className="one bg-primary-red text-white font-medium rounded-[50%] w-[35px] h-[35px] flex justify-center items-center absolute top-[56%] left-[-7%]">1</div> */}
-                                <div className={`one ${activeProduct === 'one' ? 'active' : ''}`}
-                                    onMouseEnter={() => setActiveProduct('one')}
-                                    onMouseLeave={() => setActiveProduct(null)}
-                                >
-                                    <a href="javascript:void(0)" className={`product-card-one max-w-[410px] w-full   absolute left-[-6%] top-[32%] hover:no-underline no-underline hover:text-black ${activeProduct === 'one' ? 'active' : ''}`}>
+                        {products.products && products.products.length > 0 && (() => {
+                            const featuredProducts = products.products.filter(product => product.featuredProduct === true) || [];
 
-                                        <div className="product-wrapper flex items-center bg-white">
-                                            <div className="image-part w-[48%] relative">
-                                                <img src={Product1b} alt="" className='first-image ' />
-                                                <img src={Product1a} alt="" className='second-image absolute top-0' />
+                            const firstFeatured = featuredProducts[0];
+                            const secondFeatured = featuredProducts[2];
+                            const thirdFeatured = featuredProducts[1];
 
-                                            </div>
-                                            <div className="product-info-shop w-[52%]">
-                                                <h3 className='productname mb-[8px] hover:no-underline no-underline'>Raw denim shorts with sequins</h3>
-                                                <p className='price-of-product mb-[8px] hover:no-underline no-underline'>$69.00</p>
-                                                <div className="review-product my-[15px]">
-                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#e6e6e6]" />
+                            return (
+                                <>
+
+                                    <div className="w-full sm:w-3/5 relative h-full">
+                                        {/* first product */}
+                                        {firstFeatured &&
+
+                                            <div className="firstprod">
+                                                {/* <div className="one bg-primary-red text-white font-medium rounded-[50%] w-[35px] h-[35px] flex justify-center items-center absolute top-[56%] left-[-7%]">1</div> */}
+                                                <div className={`one ${activeProduct === 'one' ? 'active' : ''}`}
+                                                    onMouseEnter={() => setActiveProduct('one')}
+                                                    onMouseLeave={() => setActiveProduct(null)}
+                                                >
+                                                    <a href="javascript:void(0)" className={`product-card-one max-w-[410px] w-full   absolute left-[-6%] top-[32%] hover:no-underline no-underline hover:text-black ${activeProduct === 'one' ? 'active' : ''}`}>
+
+                                                        <div className="product-wrapper flex items-center bg-white">
+                                                            <div className="image-part w-[48%] relative">
+                                                                <img src={`${baseUrl}${firstFeatured.images[0]}`} alt="" className='first-image ' />
+                                                                <img src={`${baseUrl}${firstFeatured.images[1]}`} alt="" className='second-image absolute top-0' />
+
+                                                            </div>
+                                                            <div className="product-info-shop w-[52%]">
+                                                                <h3 className='productname mb-[8px] hover:no-underline no-underline'>{firstFeatured.title}</h3>
+                                                                <p className='price-of-product mb-[8px] hover:no-underline no-underline'>$ {firstFeatured.sellingPrice}</p>
+                                                                <div className="review-product my-[15px]">
+                                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                    <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#e6e6e6]" />
+                                                                </div>
+                                                                <div className="btn-shop-prod" > <a href="" className='hover:no-underline no-underline'> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert hover:no-underline no-underline' />Add to cart</button></a></div>
+
+                                                            </div>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                                <div className="btn-shop-prod" > <a href="" className='hover:no-underline no-underline'> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert hover:no-underline no-underline' />Add to cart</button></a></div>
+                                            </div>}
+                                        {/* second product */}
+                                        {secondFeatured &&
 
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            {/* second product */}
-                            <div className="secondProd">
-                                {/* <div className="two bg-primary-red text-white font-medium rounded-[50%] w-[35px] h-[35px] flex justify-center items-center absolute ">2</div> */}
-                                <div className={`two ${activeProduct === 'two' ? 'active' : ''}`}
-                                    onMouseEnter={() => setActiveProduct('two')}
-                                    onMouseLeave={() => setActiveProduct(null)}
-                                >
-                                    <div className="" >
-                                        <a href="javascript:void(0)" className={`product-card-two max-w-[410px] w-full  absolute top-[22%] right-[11%] hover:no-underline no-underline hover:text-black ${activeProduct === 'two' ? 'active' : ''}`}>
+
+                                            <div className="secondProd">
+                                                {/* <div className="two bg-primary-red text-white font-medium rounded-[50%] w-[35px] h-[35px] flex justify-center items-center absolute ">2</div> */}
+                                                <div className={`two ${activeProduct === 'two' ? 'active' : ''}`}
+                                                    onMouseEnter={() => setActiveProduct('two')}
+                                                    onMouseLeave={() => setActiveProduct(null)}
+                                                >
+                                                    <div className="" >
+                                                        <a href="javascript:void(0)" className={`product-card-two max-w-[410px] w-full  absolute top-[22%] right-[11%] hover:no-underline no-underline hover:text-black ${activeProduct === 'two' ? 'active' : ''}`}>
 
 
 
-                                            <div className="product-wrapper flex items-center bg-white">
-                                                <div className="image-part w-[48%] relative">
-                                                    <img src={Product2a} alt="" className='first-image ' />
-                                                    <img src={Product2b} alt="" className='second-image absolute top-0' />
+                                                            <div className="product-wrapper flex items-center bg-white">
+                                                                <div className="image-part w-[48%] relative">
+                                                                    <img src={`${baseUrl}${secondFeatured.images[1]}`} alt="" className='first-image ' />
+                                                                    <img src={`${baseUrl}${secondFeatured.images[0]}`} alt="" className='second-image absolute top-0' />
 
-                                                </div>
-                                                <div className="product-info-shop w-[52%]">
-                                                    <h3 className='productname mb-[8px] hover:no-underline no-underline'>Women's slim-fit cotton tank</h3>
-                                                    <p className='price-of-product mb-[8px] hover:no-underline no-underline'>$16.00</p>
-                                                    <div className="review-product my-[15px]">
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#e6e6e6]" />
+                                                                </div>
+                                                                <div className="product-info-shop w-[52%]">
+                                                                    <h3 className='productname mb-[8px] hover:no-underline no-underline'>{secondFeatured.title}</h3>
+                                                                    <p className='price-of-product mb-[8px] hover:no-underline no-underline'>$ {secondFeatured.sellingPrice}</p>
+                                                                    <div className="review-product my-[15px]">
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#e6e6e6]" />
+                                                                    </div>
+                                                                    <div className="btn-shop-prod" > <a href="" className='hover:no-underline no-underline'> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert ' />Add to cart</button></a></div>
+
+                                                                </div>
+                                                            </div>
+                                                        </a>
                                                     </div>
-                                                    <div className="btn-shop-prod" > <a href="" className='hover:no-underline no-underline'> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert ' />Add to cart</button></a></div>
-
                                                 </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* third product */}
-                            <div className="thirdProd">
-                                {/* <div className="three bg-primary-red text-white font-medium rounded-[50%] w-[35px] h-[35px] flex justify-center items-center ">3</div> */}
-                                <div className={`three ${activeProduct === 'three' ? 'active' : ''}`}
-                                    onMouseEnter={() => setActiveProduct('three')}
-                                    onMouseLeave={() => setActiveProduct(null)}
-                                >
-                                    <div className="" >
-                                        <a href="javascript:void(0)" className={`product-card-three max-w-[410px] w-full  absolute left-[-7%] bottom-[5%] hover:no-underline no-underline hover:text-black ${activeProduct === 'three' ? 'active' : ''}`}>
+                                            </div>}
+                                        {/* third product */}
+                                        {thirdFeatured &&
 
-                                            <div className="product-wrapper flex items-center bg-white">
-                                                <div className="image-part w-[48%] relative">
-                                                    <img src={Product3a} alt="" className='first-image ' />
-                                                    <img src={Product3b} alt="" className='second-image absolute top-0' />
+                                            <div className="thirdProd">
+                                                {/* <div className="three bg-primary-red text-white font-medium rounded-[50%] w-[35px] h-[35px] flex justify-center items-center ">3</div> */}
+                                                <div className={`three ${activeProduct === 'three' ? 'active' : ''}`}
+                                                    onMouseEnter={() => setActiveProduct('three')}
+                                                    onMouseLeave={() => setActiveProduct(null)}
+                                                >
+                                                    <div className="" >
+                                                        <a href="javascript:void(0)" className={`product-card-three max-w-[410px] w-full  absolute left-[-7%] bottom-[5%] hover:no-underline no-underline hover:text-black ${activeProduct === 'three' ? 'active' : ''}`}>
 
-                                                </div>
-                                                <div className="product-info-shop w-[52%]">
-                                                    <h3 className='productname mb-[8px] hover:no-underline no-underline'>Textured vegan leather moto jacket</h3>
-                                                    <p className='price-of-product mb-[8px] hover:no-underline no-underline'>$693.00-$699.00</p>
-                                                    <div className="review-product my-[15px]">
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
-                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#e6e6e6]" />
+                                                            <div className="product-wrapper flex items-center bg-white">
+                                                                <div className="image-part w-[48%] relative">
+                                                                    <img src={`${baseUrl}${thirdFeatured.images[0]}`} alt="" className='first-image ' />
+                                                                    <img src={`${baseUrl}${thirdFeatured.images[1]}`} alt="" className='second-image absolute top-0' />
+
+                                                                </div>
+                                                                <div className="product-info-shop w-[52%]">
+                                                                    <h3 className='productname mb-[8px] hover:no-underline no-underline'>{thirdFeatured.title}</h3>
+                                                                    <p className='price-of-product mb-[8px] hover:no-underline no-underline'>${thirdFeatured.discountPrice} - ${thirdFeatured.sellingPrice}</p>
+                                                                    <div className="review-product my-[15px]">
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#000]" />
+                                                                        <FontAwesomeIcon icon={faStar} className=" text-[12px] text-[#e6e6e6]" />
+                                                                    </div>
+                                                                    <div className="btn-shop-prod" > <a href="" className='hover:no-underline no-underline'> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert hover:no-underline no-underline' />Select options</button></a></div>
+
+                                                                </div>
+                                                            </div>
+                                                        </a>
                                                     </div>
-                                                    <div className="btn-shop-prod" > <a href="" className='hover:no-underline no-underline'> <button className='bg-black text-white black-btn-shop rounded-[30px] flex items-center gap-2'><img src={cart} alt="" className='w-[20px] h-[20px] invert hover:no-underline no-underline' />Select options</button></a></div>
-
                                                 </div>
-                                            </div>
-                                        </a>
+                                            </div>}
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                </>
+                            );
+                        })()}
                     </div>
                 </div>
             </div>

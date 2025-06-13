@@ -136,3 +136,8 @@ a.wishlist:hover {
     right: 6px !important;
 }
 }
+@media (min-width: 450px) {
+img.main-product-img {
+    height: 450px;
+    object-fit: cover;
+}}

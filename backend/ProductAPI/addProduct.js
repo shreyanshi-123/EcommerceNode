@@ -4,7 +4,7 @@ const addProduct = async (req, res) => {
    
 
   try {
-    const { title, shortDescription, LongDescription, stock, sellingPrice, discountPrice, category, image, additionalInfo } = req.body;
+    const { title, shortDescription, LongDescription, stock, sellingPrice, discountPrice, category, image, additionalInfo,featuredProduct } = req.body;
 
     if (!title || !shortDescription || !LongDescription || stock == null  || sellingPrice == null )  {
       return res.status(400).json({ error: 'All fields are required' });
